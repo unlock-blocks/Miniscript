@@ -9,5 +9,4 @@ declare module 'bip68' {
   export function decode(value: number): { blocks: number; seconds: number };
 }
 
-declare module 'aria-query';
 declare module 'entities/decode';

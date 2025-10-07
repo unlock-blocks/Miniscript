@@ -11,7 +11,6 @@ Playground/
 ├─ btcLogo.png                   # Logo del proyecto
 ├─ index.html                    # Página principal 
 ├─ style.css                     # Estilos globales 
-├─ jest.config.js                # Configuración de Jest
 ├─ package-lock.json             # Bloqueo de dependencias 
 ├─ package.json                  # Scripts y dependencias
 ├─ tsconfig.json                 # Configuración de TypeScript
@@ -28,9 +27,8 @@ Playground/
     ├─ types.d.ts                # Definiciones de tipos globales de TypeScript
     ├─ autocustodia.source.ts    
     ├─ boveda.source.ts        
-    ├─ herencia.source.ts       
-    └─ __test__/                 # Tests de interfaz
-        └─ interfaz.test.ts      
+    └─ herencia.source.ts 
+
 
 ```
 
@@ -51,15 +49,9 @@ Ejecutar los siguientes comandos para instalar las dependencias necesarias:
 
 **Browserify** está diseñado para empaquetar código de Node.js y proveer los polyfills necesarios para que funcionen en el navegador (incluyendo Buffer, process, etc.).
 
-### Dependencias de desarrollo:
-```bash
-npm install --save-dev browserify tsify typescript jest ts-jest @types/jest @testing-library/jest-dom
-```
-
-
 ### Dependencias del proyecto:
 ```bash
-npm install @bitcoinerlab/secp256k1 @bitcoinerlab/descriptors bip39 bitcoinjs-lib 
+npm install 
 ```
 
 ---
@@ -83,7 +75,6 @@ declare module 'bip68' {
   export function decode(value: number): { blocks: number; seconds: number };
 }
 
-declare module 'aria-query';
 declare module 'entities/decode';
 ```
 
@@ -105,39 +96,17 @@ Crear el archivo `tsconfig.json`
     "esModuleInterop": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "moduleResolution": "node",
-    "types": ["jest"]
+    "moduleResolution": "node"
   },
     "include": ["src/**/*.ts", "src/types.d.ts"],
     "exclude": [
-      "node_modules",
-      "src/__test__"
+      "node_modules"
     ]
 }
 ```
 
----
 
- 
-### 4. Configuración `tsconfig.test.json`
-
-Crear un archivo `tsconfig.test.json` con la configuración especifica de **jest**
-
-
-```json
-{
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-      "types": ["jest", "@testing-library/jest-dom"]
-    },
-    "include": ["src/__test__/**/*.ts"]
-}
-```
-
----
-
-
-### 5. Configuración de Scripts en `package.json`
+### 4. Configuración de Scripts en `package.json`
 
 Agregar el siguiente script en la sección `"scripts"` del archivo `package.json`:
 
@@ -148,23 +117,22 @@ Agregar el siguiente script en la sección `"scripts"` del archivo `package.json
 ```json
 {
   "scripts": {
-    "test": "jest",
-
     "build-autocustodia": "browserify src/autocustodia.source.ts -p tsify --project tsconfig.json -o dist/autocustodia.bundle.js",
     "build-boveda": "browserify src/boveda.source.ts -p tsify --project tsconfig.json -o dist/boveda.bundle.js",
     "build-herencia": "browserify src/herencia.source.ts -p tsify --project tsconfig.json -o dist/herencia.bundle.js",
     "build-all": "browserify src/autocustodia.source.ts -p tsify --project tsconfig.json -o dist/autocustodia.bundle.js && browserify src/herencia.source.ts -p tsify --project tsconfig.json -o dist/herencia.bundle.js && browserify src/boveda.source.ts -p tsify --project tsconfig.json -o dist/boveda.bundle.js",
+    "build": "npm run build-all",
     
     "watch-autocustodia": "watchify src/autocustodia.source.ts -p tsify --project tsconfig.json -o dist/autocustodia.bundle.js --debug --verbose",
     "watch-boveda": "watchify src/boveda.source.ts -p tsify --project tsconfig.json -o dist/boveda.bundle.js --debug --verbose",
     "watch-herencia": "watchify src/herencia.source.ts -p tsify --project tsconfig.json -o dist/herencia.bundle.js --debug --verbose"
-  },
+  }
 }
 ```
 
 ---
 
-### 6. Compilar el código
+### 5. Compilar el código
 
 Compilar en un paso o en modo watch:
 
@@ -172,7 +140,7 @@ Compilar en un paso o en modo watch:
 npm run build-autocustodia
 npm run build-boveda
 npm run build-herencia
-npm run build-all
+npm run build
 ```
 o
 ```bash
@@ -184,44 +152,10 @@ npm run watch-herencia
 ---
 
 
-### 7. Instalar extension `Live Server` en VSCode
+### 6. Instalar extension `Live Server` en VSCode
 
 Instalar desde el marketplace y activar "Go Live"
 
-### 8. Configuración de Jest
-
-Inicializar jest
-
-```bash
-npx ts-jest config:init
-```
-
-Editar `jest.config.js` con la siguiente configuración:
-
-```js
-/** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
-  testEnvironment: "jsdom",
-  transform: {
-    "^.+\\.tsx?$": ["ts-jest", {}],
-  },
-};
-```
-
-De esta manera Jest puede trabajar con TypeScript y simular el DOM en los tests.
-
-### 9. Ejecutar los Tests
-
-Para ejecutar todos los tests y ver los resultados detallados:
-
-```bash
-npm test
-```
-o 
-
-```bash
-npx jest --verbose
-```
 
 
 ---

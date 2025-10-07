@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-
     "build-autocustodia": "browserify src/autocustodia.source.ts -p tsify --project tsconfig.json -o dist/autocustodia.bundle.js",
     "build-boveda": "browserify src/boveda.source.ts -p tsify --project tsconfig.json -o dist/boveda.bundle.js",
     "build-herencia": "browserify src/herencia.source.ts -p tsify --project tsconfig.json -o dist/herencia.bundle.js",
@@ -23,7 +21,7 @@
     "Smart Contracts",
     "self-custody"
   ],
-  "author": "Angel Perez",
+  "author": "@unlock_blocks",
   "license": "MIT",
   "description": "Playground interactivo para experimentar con Miniscript y pólizas de gasto",
   "dependencies": {
@@ -35,15 +33,10 @@
     "tiny-secp256k1": "^2.2.3"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.6.3",
-    "@types/aria-query": "^5.0.4",
-    "@types/jest": "^29.5.14",
     "browserify": "^17.0.1",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "ts-jest": "^29.3.2",
     "tsify": "^5.0.4",
     "typescript": "^5.8.2",
     "watchify": "^4.0.0"
   }
+
 }
