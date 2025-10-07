@@ -6,12 +6,10 @@
     "esModuleInterop": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "moduleResolution": "node",
-    "types": ["jest"]
+    "moduleResolution": "node"
   },
-    "include": ["src/*.ts", "src/types.d.ts"],
+    "include": ["src/**/*.ts", "src/types.d.ts"],
     "exclude": [
-      "node_modules",
-      "src/__test__"
+      "node_modules"
     ]
 }

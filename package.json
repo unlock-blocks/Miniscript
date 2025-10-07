@@ -1,7 +1,7 @@
 {
   "name": "miniscript-playground",
   "version": "1.0.0",
-  "main": "index.js",
+
   "scripts": {
     "build-autocustodia": "browserify src/autocustodia.source.ts -p tsify --project tsconfig.json -o dist/autocustodia.bundle.js",
     "build-boveda": "browserify src/boveda.source.ts -p tsify --project tsconfig.json -o dist/boveda.bundle.js",
