@@ -75748,7 +75748,8 @@ const recoveryPSBT = (masterNode, network, explorer, wshDescriptor, originalBloc
     try {
         console.log('Descriptor WSH:', wshDescriptor);
         const actualBlockHeight = parseInt(yield (yield fetch(`${explorer}/api/blocks/tip/height`)).text());
-        const restingBlocks = originalBlockHeight + BLOCKS_RECOVERY - actualBlockHeight;
+        const { recovery: blocksRec } = getBlocksFromUIAutocustodia();
+        const restingBlocks = originalBlockHeight + blocksRec - actualBlockHeight;
         const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
         // Crear un nuevo output para la clave de emergencia
         const key_recovery_1 = masterNode.derivePath(`m${WSH_ORIGIN_PATH_RECOVERY1}${WSH_KEY_PATH}`).publicKey;
@@ -75852,7 +75853,8 @@ const emergencyPSBT = (masterNode, network, explorer, wshDescriptor, originalBlo
     try {
         console.log('Descriptor WSH:', wshDescriptor);
         const actualBlockHeight = parseInt(yield (yield fetch(`${explorer}/api/blocks/tip/height`)).text());
-        const restingBlocks = originalBlockHeight + BLOCKS_EMERGENCY - actualBlockHeight;
+        const { emergency: blocksEmer } = getBlocksFromUIAutocustodia();
+        const restingBlocks = originalBlockHeight + blocksEmer - actualBlockHeight;
         const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
         // Crear un nuevo output para la clave de emergencia
         const emergencyKey = masterNode.derivePath(`m${WSH_ORIGIN_PATH_EMERGENCY}${WSH_KEY_PATH}`).publicKey;

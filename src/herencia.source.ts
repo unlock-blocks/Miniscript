@@ -35,8 +35,8 @@ const WSH_KEY_PATH = `/0/0`;
 const MNEMONIC = 'fábula medalla sastre pronto mármol rutina diez poder fuente pulpo empate lagarto';
 
 // Bloqueos
-const BLOCKS_HERENCIA = 5;
-const BLOCKS_RECOVERY = 10;
+const BLOCKS_HERENCIA = 3;
+const BLOCKS_RECOVERY = 5;
 
 // Consola pagina web
 const outputConsole = document.getElementById('output-console') as HTMLElement;
@@ -773,10 +773,11 @@ const disputaPSBT = async (masterNode: BIP32Interface, network: any, explorer: s
 
     console.log('Descriptor WSH:', wshDescriptor);
 
-    const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
-    const restingBlocks = originalBlockHeight + BLOCKS_RECOVERY - actualBlockHeight;
-    const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
-    const blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
+  const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
+  const { recovery: blocksRec } = getBlocksFromUI();
+  const restingBlocks = originalBlockHeight + blocksRec - actualBlockHeight;
+  const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
+  const blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
 
     // Crear un nuevo output para la clave de emergencia
     const abogadoKey = masterNode.derivePath(`m${WSH_ORIGIN_PATH_RECOVERY}${WSH_KEY_PATH}`).publicKey;

@@ -656,9 +656,10 @@ const recoveryPSBT = async (masterNode: BIP32Interface, network: any, explorer: 
   try {
     console.log('Descriptor WSH:', wshDescriptor);
 
-    const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
-    const restingBlocks = originalBlockHeight + BLOCKS_RECOVERY - actualBlockHeight;
-    const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
+  const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
+  const { recovery: blocksRec } = getBlocksFromUIAutocustodia();
+  const restingBlocks = originalBlockHeight + blocksRec - actualBlockHeight;
+  const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
 
     // Crear un nuevo output para la clave de emergencia
     const key_recovery_1 = masterNode.derivePath(`m${WSH_ORIGIN_PATH_RECOVERY1}${WSH_KEY_PATH}`).publicKey;
@@ -798,9 +799,10 @@ const emergencyPSBT = async (masterNode: BIP32Interface, network: any, explorer:
   try {
     console.log('Descriptor WSH:', wshDescriptor);
 
-    const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
-    const restingBlocks = originalBlockHeight + BLOCKS_EMERGENCY - actualBlockHeight;
-    const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
+  const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
+  const { emergency: blocksEmer } = getBlocksFromUIAutocustodia();
+  const restingBlocks = originalBlockHeight + blocksEmer - actualBlockHeight;
+  const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
 
     // Crear un nuevo output para la clave de emergencia
     const emergencyKey = masterNode.derivePath(`m${WSH_ORIGIN_PATH_EMERGENCY}${WSH_KEY_PATH}`).publicKey;
