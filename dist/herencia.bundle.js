@@ -75227,6 +75227,39 @@ module.exports = bs58checkBase(sha256x2)
 (function (Buffer){(function (){
 "use strict";
 // Distributed under the MIT software license
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -75236,93 +75269,66 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", { value: true });
-var secp256k1 = require("@bitcoinerlab/secp256k1");
-var descriptors = require("@bitcoinerlab/descriptors");
-var miniscript_1 = require("@bitcoinerlab/miniscript");
-var bip39_1 = require("bip39");
-var bip65_1 = require("bip65");
-var bitcoinjs_lib_1 = require("bitcoinjs-lib");
-var crypto_1 = require("crypto");
+const secp256k1 = __importStar(require("@bitcoinerlab/secp256k1"));
+const descriptors = __importStar(require("@bitcoinerlab/descriptors"));
+const miniscript_1 = require("@bitcoinerlab/miniscript");
+const bip39_1 = require("bip39");
+const bip65_1 = require("bip65");
+const bitcoinjs_lib_1 = require("bitcoinjs-lib");
+const crypto_1 = require("crypto");
 // https://coinfaucet.eu/en/btc-testnet/      =>  tb1qerzrlxcfu24davlur5sqmgzzgsal6wusda40er
 // https://bitcoinfaucet.uo1.net/                   =>  b1qlj64u6fqutr0xue85kl55fx0gt4m4urun25p7q
 // Address faucet devolver utxos
-var TESTNET3_FAUCET = 'tb1qerzrlxcfu24davlur5sqmgzzgsal6wusda40er';
-var TESTNET4_FAUCET = 'tb1qn9rvr53m7qvrpysx48svuxsgahs88xfsskx367';
-var wpkhBIP32 = descriptors.scriptExpressions.wpkhBIP32;
-var _d = descriptors.DescriptorsFactory(secp256k1), Output = _d.Output, BIP32 = _d.BIP32;
+const TESTNET3_FAUCET = 'tb1qerzrlxcfu24davlur5sqmgzzgsal6wusda40er';
+const TESTNET4_FAUCET = 'tb1qn9rvr53m7qvrpysx48svuxsgahs88xfsskx367';
+const { wpkhBIP32 } = descriptors.scriptExpressions;
+const { Output, BIP32 } = descriptors.DescriptorsFactory(secp256k1);
 // Comisiones de la red
-var FEE = 200;
+const FEE = 200;
 // El purpuse se puede elegir libremiente
-var WSH_ORIGIN_PATH_PROGEN = "/301'/1'/0'";
-var WSH_ORIGIN_PATH_DESCEN_1 = "/302'/1'/0'";
-var WSH_ORIGIN_PATH_DESCEN_2 = "/303'/1'/0'";
-var WSH_ORIGIN_PATH_RECOVERY = "/304'/1'/0'";
+const WSH_ORIGIN_PATH_PROGEN = `/301'/1'/0'`;
+const WSH_ORIGIN_PATH_DESCEN_1 = `/302'/1'/0'`;
+const WSH_ORIGIN_PATH_DESCEN_2 = `/303'/1'/0'`;
+const WSH_ORIGIN_PATH_RECOVERY = `/304'/1'/0'`;
 // 0/0 es la primera dirección derivada de la cuenta 0, se usa para todas las claves
-var WSH_KEY_PATH = "/0/0";
+const WSH_KEY_PATH = `/0/0`;
 // Semilla se utliza para calcular las claves, se dejan harcodeadas,  se podrían guardar en localStorage
-var MNEMONIC = 'fábula medalla sastre pronto mármol rutina diez poder fuente pulpo empate lagarto';
+const MNEMONIC = 'fábula medalla sastre pronto mármol rutina diez poder fuente pulpo empate lagarto';
 // Bloqueos
-var BLOCKS_HERENCIA = 5;
-var BLOCKS_RECOVERY = 10;
+const BLOCKS_HERENCIA = 5;
+const BLOCKS_RECOVERY = 10;
 // Consola pagina web
-var outputConsole = document.getElementById('output-console');
+const outputConsole = document.getElementById('output-console');
 /************************ FUNCIONES AUXILIARES  ************************/
 // Funcion que toma el valor de la poliza de gasto
-var POLICY = function (after_her, after_rec) { return "or(pk(@key_progen), or(thresh(3, pk(@key_descend_1), pk(@key_descend_2), after(".concat(after_her, ")), thresh(2, pk(@key_recover), after(").concat(after_rec, "))))"); };
+const POLICY = (after_her, after_rec) => `or(pk(@key_progen), or(thresh(3, pk(@key_descend_1), pk(@key_descend_2), after(${after_her})), thresh(2, pk(@key_recover), after(${after_rec}))))`;
 // Función para mostrar por pantalla el fingerprint del nodo maestro y las xpubkeys
 function calculateFingerprint(masterNode) {
     // Obtener la clave pública del nodo maestro
-    var publicKey = masterNode.publicKey;
+    const publicKey = masterNode.publicKey;
     // Calcular el hash SHA256 seguido de RIPEMD160
-    var sha256Hash = (0, crypto_1.createHash)('sha256').update(publicKey).digest();
-    var ripemd160Hash = (0, crypto_1.createHash)('ripemd160').update(sha256Hash).digest();
+    const sha256Hash = (0, crypto_1.createHash)('sha256').update(publicKey).digest();
+    const ripemd160Hash = (0, crypto_1.createHash)('ripemd160').update(sha256Hash).digest();
     // Usar Uint8Array.prototype.slice() para tomar los primeros 4 bytes como fingerprint
-    var fingerprint = Buffer.from(new Uint8Array(ripemd160Hash).slice(0, 4)).toString('hex');
+    const fingerprint = Buffer.from(new Uint8Array(ripemd160Hash).slice(0, 4)).toString('hex');
     // Ver el extended pubkey de unvaultKey
-    var childProgenitor = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_PROGEN));
+    const childProgenitor = masterNode.derivePath(`m${WSH_ORIGIN_PATH_PROGEN}`);
     // Neutered para obtener la clave pública extendida
-    var xpubProgenitor = childProgenitor.neutered().toBase58();
+    const xpubProgenitor = childProgenitor.neutered().toBase58();
     // Ver el extended pubkey de emergencyKey
-    var chidDescen1 = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_DESCEN_1));
+    const chidDescen1 = masterNode.derivePath(`m${WSH_ORIGIN_PATH_DESCEN_1}`);
     // Neutered para obtener la clave pública extendida
-    var xpubDescen1 = chidDescen1.neutered().toBase58();
+    const xpubDescen1 = chidDescen1.neutered().toBase58();
     // Ver el extended pubkey de emergencyKey
-    var chidDescen2 = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_DESCEN_2));
+    const chidDescen2 = masterNode.derivePath(`m${WSH_ORIGIN_PATH_DESCEN_2}`);
     // Neutered para obtener la clave pública extendida
-    var xpubDescen2 = chidDescen2.neutered().toBase58();
+    const xpubDescen2 = chidDescen2.neutered().toBase58();
     // Ver el extended pubkey de emergencyKey
-    var chidRecover = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_RECOVERY));
+    const chidRecover = masterNode.derivePath(`m${WSH_ORIGIN_PATH_RECOVERY}`);
     // Neutered para obtener la clave pública extendida
-    var xpubRecover = chidRecover.neutered().toBase58();
+    const xpubRecover = chidRecover.neutered().toBase58();
     // Mostrar los resultados en la consola
     console.log('Masternode fingerprint:', fingerprint);
     console.log('Extended pubKey Progenitor:', xpubProgenitor);
@@ -75331,26 +75337,41 @@ function calculateFingerprint(masterNode) {
     console.log('Extended pubKey Abogado :', xpubRecover);
 }
 // Función auxiliar para obtener el nombre de la red según el explorer
-var getNetworkName = function (explorer) {
+const getNetworkName = (explorer) => {
     if (explorer.includes('testnet4'))
         return 'Testnet 4';
     if (explorer.includes('testnet'))
         return 'Testnet 3';
     return 'Desconocida';
 };
+// Leer número de bloques desde la interfaz (inputs con id 'blocks-herencia' y 'blocks-disputa')
+function getBlocksFromUI() {
+    try {
+        const h = document.getElementById('blocks-herencia');
+        const d = document.getElementById('blocks-disputa');
+        const her = h ? parseInt(h.value, 10) : BLOCKS_HERENCIA;
+        const rec = d ? parseInt(d.value, 10) : BLOCKS_RECOVERY;
+        return {
+            herencia: Number.isNaN(her) ? BLOCKS_HERENCIA : Math.max(1, her),
+            recovery: Number.isNaN(rec) ? BLOCKS_RECOVERY : Math.max(1, rec),
+        };
+    }
+    catch (e) {
+        return { herencia: BLOCKS_HERENCIA, recovery: BLOCKS_RECOVERY };
+    }
+}
 // Función para mostrar mensajes en la interfaz de usuario
-var logToOutput = function (outputContainer, message, type) {
-    if (type === void 0) { type = 'info'; }
-    var paragraph = document.createElement('p');
+const logToOutput = (outputContainer, message, type = 'info') => {
+    const paragraph = document.createElement('p');
     paragraph.innerHTML = message;
-    paragraph.classList.add('output-line', "output-".concat(type));
+    paragraph.classList.add('output-line', `output-${type}`);
     outputContainer.appendChild(paragraph);
     outputContainer.scrollTop = outputContainer.scrollHeight;
 };
 // Habilitar los botones de la pagina web despues de la inicializacion
 function enableButtons() {
-    var buttons = document.querySelectorAll('button');
-    buttons.forEach(function (button) {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
         if (button.id !== 'initTestnet4Btn' && button.id !== 'initTestnet3Btn') {
             button.disabled = false;
         }
@@ -75361,648 +75382,584 @@ function enableButtons() {
     });
 }
 // Mensaje de bienvenida
-logToOutput(outputConsole, '<span aria-hidden="true">🚀</span> Iniciar en red de pruebas:  <span aria-hidden="true">▶️</span> <a href="#" onclick="document.getElementById(\'initTestnet4Btn\').click();return false;">Testnet 4</a>', 'info');
+logToOutput(outputConsole, '<span aria-hidden="true">🚀</span> Iniciar en red de pruebas: <a href="#" onclick="document.getElementById(\'initTestnet3Btn\').click();return false;">Testnet 3</a> o <a href="#" onclick="document.getElementById(\'initTestnet4Btn\').click();return false;">Testnet 4</a>', 'info');
 /************************ ▶️ INICIALIZAR EL MINISCRIPT  ************************/
-var initMiniscriptObjet = function (network, explorer) { return __awaiter(void 0, void 0, void 0, function () {
-    var masterNode, originalBlockHeight, _a, blockHash, blockDetails, blockDate, networkName, herencia, recovery, policy, _b, miniscript, issane, key_progen, key_descend_1, key_descend_2, key_recover, wshDescriptor, MiniscriptObjet, miniscriptAddress, error_1;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
-            case 0:
-                _c.trys.push([0, 7, , 8]);
-                masterNode = BIP32.fromSeed((0, bip39_1.mnemonicToSeedSync)(MNEMONIC), network);
-                _a = parseInt;
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/blocks/tip/height"))];
-            case 1: return [4 /*yield*/, (_c.sent()).text()];
-            case 2:
-                originalBlockHeight = _a.apply(void 0, [_c.sent()]);
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/block-height/").concat(originalBlockHeight))];
-            case 3: return [4 /*yield*/, (_c.sent()).text()];
-            case 4:
-                blockHash = _c.sent();
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/block/").concat(blockHash))];
-            case 5: return [4 /*yield*/, (_c.sent()).json()];
-            case 6:
-                blockDetails = _c.sent();
-                blockDate = new Date(blockDetails.timestamp * 1000);
-                networkName = getNetworkName(explorer);
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83C\uDF10</span> Iniciando la wallet en la red  <strong>".concat(networkName, "</strong>"), 'info');
-                logToOutput(outputConsole, '<span aria-hidden="true">🌟</span> ¡El Playground ha sido inicializado con éxito! <span aria-hidden="true">🌟</span>', 'success');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                herencia = (0, bip65_1.encode)({ blocks: originalBlockHeight + BLOCKS_HERENCIA });
-                recovery = (0, bip65_1.encode)({ blocks: originalBlockHeight + BLOCKS_RECOVERY });
-                policy = POLICY(herencia, recovery);
-                _b = (0, miniscript_1.compilePolicy)(policy), miniscript = _b.miniscript, issane = _b.issane;
-                if (!issane)
-                    throw new Error('Miniscript no válido.');
-                key_progen = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_PROGEN).concat(WSH_KEY_PATH)).publicKey;
-                key_descend_1 = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_DESCEN_1).concat(WSH_KEY_PATH)).publicKey;
-                key_descend_2 = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_DESCEN_2).concat(WSH_KEY_PATH)).publicKey;
-                key_recover = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_RECOVERY).concat(WSH_KEY_PATH)).publicKey;
-                wshDescriptor = "wsh(".concat(miniscript
-                    .replace('@key_progen', descriptors.keyExpressionBIP32({
-                    masterNode: masterNode,
-                    originPath: WSH_ORIGIN_PATH_PROGEN,
-                    keyPath: WSH_KEY_PATH
-                }))
-                    .replace('@key_descend_1', descriptors.keyExpressionBIP32({
-                    masterNode: masterNode,
-                    originPath: WSH_ORIGIN_PATH_DESCEN_1,
-                    keyPath: WSH_KEY_PATH
-                }))
-                    .replace('@key_descend_2', descriptors.keyExpressionBIP32({
-                    masterNode: masterNode,
-                    originPath: WSH_ORIGIN_PATH_DESCEN_2,
-                    keyPath: WSH_KEY_PATH
-                }))
-                    .replace('@key_recover', descriptors.keyExpressionBIP32({
-                    masterNode: masterNode,
-                    originPath: WSH_ORIGIN_PATH_RECOVERY,
-                    keyPath: WSH_KEY_PATH
-                })), ")");
-                MiniscriptObjet = new Output({
-                    descriptor: wshDescriptor,
-                    network: network,
-                    signersPubKeys: [key_progen]
-                });
-                miniscriptAddress = MiniscriptObjet.getAddress();
-                // Habilitar los botones de la interfaz de usuario después de la inicialización
-                enableButtons();
-                // Mostrar información en la consola
-                console.log("Bloque, fecha y hora: ".concat(originalBlockHeight, " ").concat(blockDate.toLocaleString()));
-                console.log("Frase mnem\u00F3nica: ".concat(MNEMONIC));
-                console.log("Ruta de derivaci\u00F3n del Progenitor: m".concat(WSH_ORIGIN_PATH_PROGEN).concat(WSH_KEY_PATH));
-                console.log("Ruta de derivaci\u00F3n del Heredero 1: m".concat(WSH_ORIGIN_PATH_DESCEN_1).concat(WSH_KEY_PATH));
-                console.log("Ruta de derivaci\u00F3n del Heredero 2: m".concat(WSH_ORIGIN_PATH_DESCEN_2).concat(WSH_KEY_PATH));
-                console.log("Ruta de derivaci\u00F3n del Abogado: m".concat(WSH_ORIGIN_PATH_RECOVERY).concat(WSH_KEY_PATH));
-                calculateFingerprint(masterNode);
-                console.log('Public key Progenitor:', key_progen.toString('hex'));
-                console.log('Public key Heredero 1:', key_descend_1.toString('hex'));
-                console.log('Public key Heredero 2:', key_descend_2.toString('hex'));
-                console.log('Public key  Abogado:', key_recover.toString('hex'));
-                console.log("Policy: ".concat(policy));
-                console.log('Generated Miniscript:', miniscript);
-                console.log("Miniscript address: ".concat(miniscriptAddress));
-                console.log('Descriptor:', wshDescriptor);
-                console.log('Miniscript object:', MiniscriptObjet.expand());
-                // Retornar el descriptor Miniscript, la altura actual del bloque y la política de gasto
-                return [2 /*return*/, { MiniscriptObjet: MiniscriptObjet, originalBlockHeight: originalBlockHeight, masterNode: masterNode, wshDescriptor: wshDescriptor }];
-            case 7:
-                error_1 = _c.sent();
-                // Manejar errores durante la inicialización del Miniscript
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u274C</span> Error al inicializar Miniscript:".concat((error_1 === null || error_1 === void 0 ? void 0 : error_1.message) || 'Error desconocido'), 'error');
-                throw error_1;
-            case 8: return [2 /*return*/];
-        }
-    });
-}); };
+const initMiniscriptObjet = (network, explorer) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Nodo maestro del que se derivan el resto de hijos
+        const masterNode = BIP32.fromSeed((0, bip39_1.mnemonicToSeedSync)(MNEMONIC), network);
+        // Obtener la altura actual del bloque desde el explorador
+        const originalBlockHeight = parseInt(yield (yield fetch(`${explorer}/api/blocks/tip/height`)).text());
+        // Obtener el hash del último bloque
+        const blockHash = yield (yield fetch(`${explorer}/api/block-height/${originalBlockHeight}`)).text();
+        // Obtener los detalles del bloque (incluye el timestamp)
+        const blockDetails = yield (yield fetch(`${explorer}/api/block/${blockHash}`)).json();
+        // El timestamp viene en segundos desde Epoch, conviértelo a fecha legible
+        const blockDate = new Date(blockDetails.timestamp * 1000);
+        // Obtener el nombre de la red
+        const networkName = getNetworkName(explorer);
+        logToOutput(outputConsole, `<span aria-hidden="true">🌐</span> Iniciando la wallet en la red  <strong>${networkName}</strong>`, 'info');
+        logToOutput(outputConsole, '<span aria-hidden="true">🌟</span> ¡El Playground ha sido inicializado con éxito! <span aria-hidden="true">🌟</span>', 'success');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+        // Leer valores configurables desde la UI (si el usuario ha cambiado los inputs)
+        const { herencia: blocksHer, recovery: blocksRec } = getBlocksFromUI();
+        // Calcular el valor de "after" basado en la altura actual del bloque y el número de bloques de espera
+        const herencia = (0, bip65_1.encode)({ blocks: originalBlockHeight + blocksHer });
+        const recovery = (0, bip65_1.encode)({ blocks: originalBlockHeight + blocksRec });
+        // Crear la política de gasto basada en el valor de "after"
+        const policy = POLICY(herencia, recovery);
+        // Compilar la política de gasto en Miniscript y verificar si es válida
+        const { miniscript, issane } = (0, miniscript_1.compilePolicy)(policy);
+        if (!issane)
+            throw new Error('Miniscript no válido.');
+        // Derivar las claves públicas de los nodos hijos
+        const key_progen = masterNode.derivePath(`m${WSH_ORIGIN_PATH_PROGEN}${WSH_KEY_PATH}`).publicKey;
+        const key_descend_1 = masterNode.derivePath(`m${WSH_ORIGIN_PATH_DESCEN_1}${WSH_KEY_PATH}`).publicKey;
+        const key_descend_2 = masterNode.derivePath(`m${WSH_ORIGIN_PATH_DESCEN_2}${WSH_KEY_PATH}`).publicKey;
+        const key_recover = masterNode.derivePath(`m${WSH_ORIGIN_PATH_RECOVERY}${WSH_KEY_PATH}`).publicKey;
+        // Crear el descriptor Miniscript reemplazando las claves públicas en la política
+        const wshDescriptor = `wsh(${miniscript
+            .replace('@key_progen', descriptors.keyExpressionBIP32({
+            masterNode: masterNode,
+            originPath: WSH_ORIGIN_PATH_PROGEN,
+            keyPath: WSH_KEY_PATH
+        }))
+            .replace('@key_descend_1', descriptors.keyExpressionBIP32({
+            masterNode: masterNode,
+            originPath: WSH_ORIGIN_PATH_DESCEN_1,
+            keyPath: WSH_KEY_PATH
+        }))
+            .replace('@key_descend_2', descriptors.keyExpressionBIP32({
+            masterNode: masterNode,
+            originPath: WSH_ORIGIN_PATH_DESCEN_2,
+            keyPath: WSH_KEY_PATH
+        }))
+            .replace('@key_recover', descriptors.keyExpressionBIP32({
+            masterNode: masterNode,
+            originPath: WSH_ORIGIN_PATH_RECOVERY,
+            keyPath: WSH_KEY_PATH
+        }))})`;
+        // Crear el objeto tipo Output con el descriptor y la red, por defecto se utiliza la clave de key_progen
+        const MiniscriptObjet = new Output({
+            descriptor: wshDescriptor,
+            network,
+            signersPubKeys: [key_progen]
+        });
+        // Obtener la dirección derivada del Miniscript
+        const miniscriptAddress = MiniscriptObjet.getAddress();
+        // Habilitar los botones de la interfaz de usuario después de la inicialización
+        enableButtons();
+        // Mostrar información en la consola
+        console.log(`Bloque, fecha y hora: ${originalBlockHeight} ${blockDate.toLocaleString()}`);
+        console.log(`Frase mnemónica: ${MNEMONIC}`);
+        console.log(`Ruta de derivación del Progenitor: m${WSH_ORIGIN_PATH_PROGEN}${WSH_KEY_PATH}`);
+        console.log(`Ruta de derivación del Heredero 1: m${WSH_ORIGIN_PATH_DESCEN_1}${WSH_KEY_PATH}`);
+        console.log(`Ruta de derivación del Heredero 2: m${WSH_ORIGIN_PATH_DESCEN_2}${WSH_KEY_PATH}`);
+        console.log(`Ruta de derivación del Abogado: m${WSH_ORIGIN_PATH_RECOVERY}${WSH_KEY_PATH}`);
+        calculateFingerprint(masterNode);
+        console.log('Public key Progenitor:', key_progen.toString('hex'));
+        console.log('Public key Heredero 1:', key_descend_1.toString('hex'));
+        console.log('Public key Heredero 2:', key_descend_2.toString('hex'));
+        console.log('Public key  Abogado:', key_recover.toString('hex'));
+        console.log(`Policy: ${policy}`);
+        console.log('Generated Miniscript:', miniscript);
+        console.log(`Miniscript address: ${miniscriptAddress}`);
+        console.log('Descriptor:', wshDescriptor);
+        console.log('Miniscript object:', MiniscriptObjet.expand());
+        // Retornar el descriptor Miniscript, la altura actual del bloque y la política de gasto
+        return { MiniscriptObjet, originalBlockHeight, masterNode, wshDescriptor };
+    }
+    catch (error) {
+        // Manejar errores durante la inicialización del Miniscript
+        logToOutput(outputConsole, `<span aria-hidden="true">❌</span> Error al inicializar Miniscript:${(error === null || error === void 0 ? void 0 : error.message) || 'Error desconocido'}`, 'error');
+        throw error;
+    }
+});
 /************************ 📜 CONSULTAR MINISCRIPT ************************/
-var mostrarMiniscript = function (MiniscriptObjet, originalBlockHeight, explorer) { return __awaiter(void 0, void 0, void 0, function () {
-    var networkName, actualBlockHeight, _a, restingBlocksProgen, restingBlocksHer, restingBlocksRec, displayProgen, progenClass, displayHerencia, herenClass, displayRecovery, recoveryClass, miniscriptAddress, error_2;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 3, , 4]);
-                networkName = getNetworkName(explorer);
-                _a = parseInt;
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/blocks/tip/height"))];
-            case 1: return [4 /*yield*/, (_b.sent()).text()];
-            case 2:
-                actualBlockHeight = _a.apply(void 0, [_b.sent()]);
-                restingBlocksProgen = originalBlockHeight - actualBlockHeight;
-                restingBlocksHer = originalBlockHeight + BLOCKS_HERENCIA - actualBlockHeight;
-                restingBlocksRec = originalBlockHeight + BLOCKS_RECOVERY - actualBlockHeight;
-                displayProgen = restingBlocksProgen <= 0 ? 0 : restingBlocksProgen;
-                progenClass = restingBlocksProgen > 0 ? 'output-error' : 'output-success';
-                displayHerencia = restingBlocksHer <= 0 ? 0 : restingBlocksHer;
-                herenClass = restingBlocksHer > 0 ? 'output-error' : 'output-success';
-                displayRecovery = restingBlocksRec <= 0 ? 0 : restingBlocksRec;
-                recoveryClass = restingBlocksRec > 0 ? 'output-error' : 'output-success';
-                // Mostrar información detallada 
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDEDC</span> Red actual: <strong>".concat(networkName, "</strong>"), 'info');
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDDF1</span> Altura actual de bloque: <strong>".concat(actualBlockHeight, "</strong>"), 'info');
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDDD3\uD83C\uDFFB</span> Bloques para poder gastar en la rama de acceso directo: <strong class=\"".concat(progenClass, "\">").concat(displayProgen, "</strong>"), 'info');
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDDD1\uD83C\uDFFB\uD83D\uDC68\uD83C\uDFFB</span> Bloques para poder gastar en la rama de herencia: <strong class=\"".concat(herenClass, "\">").concat(displayHerencia, "</strong>"), 'info');
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDC64</span> Bloques para poder gastar en la rama de disputa: <strong class=\"".concat(recoveryClass, "\">").concat(displayRecovery, "</strong>"), 'info');
-                miniscriptAddress = MiniscriptObjet.getAddress();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCE9</span> Direcci\u00F3n del miniscript: <a href=\"".concat(explorer, "/address/").concat(miniscriptAddress, "\" target=\"_blank\">").concat(miniscriptAddress, "</a>"), 'info');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 4];
-            case 3:
-                error_2 = _b.sent();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u274C</span> Error al mostrar el Miniscript: ".concat((error_2 === null || error_2 === void 0 ? void 0 : error_2.message) || 'Error desconocido'), 'error');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
+const mostrarMiniscript = (MiniscriptObjet, originalBlockHeight, explorer) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Obtener el nombre de la red
+        const networkName = getNetworkName(explorer);
+        const actualBlockHeight = parseInt(yield (yield fetch(`${explorer}/api/blocks/tip/height`)).text());
+        const restingBlocksProgen = originalBlockHeight - actualBlockHeight;
+        const { herencia: blocksHer2, recovery: blocksRec2 } = getBlocksFromUI();
+        const restingBlocksHer = originalBlockHeight + blocksHer2 - actualBlockHeight;
+        const restingBlocksRec = originalBlockHeight + blocksRec2 - actualBlockHeight;
+        // Control sobre el numero de bloques restantes y la clase que se le asigna
+        const displayProgen = restingBlocksProgen <= 0 ? 0 : restingBlocksProgen;
+        const progenClass = restingBlocksProgen > 0 ? 'output-error' : 'output-success';
+        const displayHerencia = restingBlocksHer <= 0 ? 0 : restingBlocksHer;
+        const herenClass = restingBlocksHer > 0 ? 'output-error' : 'output-success';
+        const displayRecovery = restingBlocksRec <= 0 ? 0 : restingBlocksRec;
+        const recoveryClass = restingBlocksRec > 0 ? 'output-error' : 'output-success';
+        // Mostrar información detallada 
+        logToOutput(outputConsole, `<span aria-hidden="true">🛜</span> Red actual: <strong>${networkName}</strong>`, 'info');
+        logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Altura actual de bloque: <strong>${actualBlockHeight}</strong>`, 'info');
+        logToOutput(outputConsole, `<span aria-hidden="true">🧓🏻</span> Bloques para poder gastar en la rama de acceso directo: <strong class="${progenClass}">${displayProgen}</strong>`, 'info');
+        logToOutput(outputConsole, `<span aria-hidden="true">🧑🏻👨🏻</span> Bloques para poder gastar en la rama de herencia: <strong class="${herenClass}">${displayHerencia}</strong>`, 'info');
+        logToOutput(outputConsole, `<span aria-hidden="true">👤</span> Bloques para poder gastar en la rama de disputa: <strong class="${recoveryClass}">${displayRecovery}</strong>`, 'info');
+        const miniscriptAddress = MiniscriptObjet.getAddress();
+        logToOutput(outputConsole, `<span aria-hidden="true">📩</span> Dirección del miniscript: <a href="${explorer}/address/${miniscriptAddress}" target="_blank">${miniscriptAddress}</a>`, 'info');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+    catch (error) {
+        logToOutput(outputConsole, `<span aria-hidden="true">❌</span> Error al mostrar el Miniscript: ${(error === null || error === void 0 ? void 0 : error.message) || 'Error desconocido'}`, 'error');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+});
 /************************ 🔍 BUSCAR FONDOS  ************************/
-var fetchUtxosMini = function (MiniscriptObjet, explorer) { return __awaiter(void 0, void 0, void 0, function () {
-    var miniscriptAddress, utxos, networkName, totalValue, sortedUtxos, error_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 3, , 4]);
-                miniscriptAddress = MiniscriptObjet.getAddress();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDD0D</span> Consultando fondos...", 'info');
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/address/").concat(miniscriptAddress, "/utxo"))];
-            case 1: return [4 /*yield*/, (_a.sent()).json()];
-            case 2:
-                utxos = _a.sent();
-                console.log('UTXOs:', utxos);
-                // Verificar si se encontraron UTXOs
-                if (utxos.length === 0) {
-                    networkName = getNetworkName(explorer);
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDEAB</span> No se encontraron fondos en la direcci\u00F3n: <a href=\"".concat(explorer, "/address/").concat(miniscriptAddress, "\" target=\"_blank\">").concat(miniscriptAddress, "</a>"), 'error');
-                    if (networkName === 'Testnet 4') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir fondos a trav\u00E9s de <a href=\"https://faucet.testnet4.dev/\" target=\"_blank\">faucet Testnet 4</a>", 'info');
-                    }
-                    else if (networkName === 'Testnet 3') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir fondos a trav\u00E9s de <a href=\"https://bitcoinfaucet.uo1.net/send.php\" target=\"_blank\">faucet Testnet 3</a>", 'info');
-                    }
-                    else {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\u26A0\uFE0F</span> La red seleccionada no tiene faucet disponible.", 'info');
-                    }
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                    return [2 /*return*/];
-                }
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u2705</span> Fondos encontrados: <a href=\"".concat(explorer, "/address/").concat(miniscriptAddress, "\" target=\"_blank\">").concat(miniscriptAddress, "</a>"), 'success');
-                totalValue = utxos.reduce(function (sum, utxo) { return sum + utxo.value; }, 0);
-                sortedUtxos = utxos.sort(function (a, b) { return (a.status.block_height || 0) - (b.status.block_height || 0); });
-                // Mostrar cada UTXO individualmente con estado de confirmación y bloque al que pertenece
-                sortedUtxos.forEach(function (utxo, index) {
-                    var confirmationStatus = utxo.status.confirmed ? '<span class="output-success"><span aria-hidden="true">✅</span> confirmado</span>' : '<span class="output-error"><span aria-hidden="true">❓</span> no confirmado</span>';
-                    var blockHeight = utxo.status.block_height || 'Desconocido';
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDE99</span> Fondos: <strong>".concat(utxo.value, "</strong> sats ").concat(confirmationStatus, " - Bloque: <strong>").concat(blockHeight, "</strong>"), 'info');
-                });
-                // Mostrar el total de los UTXOs
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCB0</span> Total fondos: <strong>".concat(totalValue, "</strong> sats"), 'info');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 4];
-            case 3:
-                error_3 = _a.sent();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u274C</span> Error al consultar los fondos:".concat((error_3 === null || error_3 === void 0 ? void 0 : error_3.message) || 'Error desconocido'), 'error');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+const fetchUtxosMini = (MiniscriptObjet, explorer) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // Obtener la dirección desde el objeto pasado como argumento
+        const miniscriptAddress = MiniscriptObjet.getAddress();
+        logToOutput(outputConsole, `<span aria-hidden="true">🔍</span> Consultando fondos...`, 'info');
+        // Consultar los UTXOs asociados a la dirección
+        const utxos = yield (yield fetch(`${explorer}/api/address/${miniscriptAddress}/utxo`)).json();
+        console.log('UTXOs:', utxos);
+        // Verificar si se encontraron UTXOs
+        if (utxos.length === 0) {
+            const networkName = getNetworkName(explorer);
+            logToOutput(outputConsole, `<span aria-hidden="true">🚫</span> No se encontraron fondos en la dirección: <a href="${explorer}/address/${miniscriptAddress}" target="_blank">${miniscriptAddress}</a>`, 'error');
+            if (networkName === 'Testnet 4') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir fondos a través de <a href="https://faucet.testnet4.dev/" target="_blank">faucet Testnet 4</a>`, 'info');
+            }
+            else if (networkName === 'Testnet 3') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir fondos a través de <a href="https://bitcoinfaucet.uo1.net/send.php" target="_blank">faucet Testnet 3</a>`, 'info');
+            }
+            else {
+                logToOutput(outputConsole, `<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible.`, 'info');
+            }
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+            return;
         }
-    });
-}); };
+        logToOutput(outputConsole, `<span aria-hidden="true">✅</span> Fondos encontrados: <a href="${explorer}/address/${miniscriptAddress}" target="_blank">${miniscriptAddress}</a>`, 'success');
+        // Calcular el total de todos los UTXOs
+        const totalValue = utxos.reduce((sum, utxo) => sum + utxo.value, 0);
+        // Ordenar los UTXOs por block_height en orden ascendente (de más antiguo a más reciente)
+        const sortedUtxos = utxos.sort((a, b) => (a.status.block_height || 0) - (b.status.block_height || 0));
+        // Mostrar cada UTXO individualmente con estado de confirmación y bloque al que pertenece
+        sortedUtxos.forEach((utxo, index) => {
+            const confirmationStatus = utxo.status.confirmed ? '<span class="output-success"><span aria-hidden="true">✅</span> confirmado</span>' : '<span class="output-error"><span aria-hidden="true">❓</span> no confirmado</span>';
+            const blockHeight = utxo.status.block_height || 'Desconocido';
+            logToOutput(outputConsole, `<span aria-hidden="true">🪙</span> Fondos: <strong>${utxo.value}</strong> sats ${confirmationStatus} - Bloque: <strong>${blockHeight}</strong>`, 'info');
+        });
+        // Mostrar el total de los UTXOs
+        logToOutput(outputConsole, `<span aria-hidden="true">💰</span> Total fondos: <strong>${totalValue}</strong> sats`, 'info');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+    catch (error) {
+        logToOutput(outputConsole, `<span aria-hidden="true">❌</span> Error al consultar los fondos:${(error === null || error === void 0 ? void 0 : error.message) || 'Error desconocido'}`, 'error');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+});
 /************************ 🚛 ULTIMA TX ************************/
-var fetchTransaction = function (MiniscriptObjet, explorer) { return __awaiter(void 0, void 0, void 0, function () {
-    var miniscriptAddress_1, txHistory, networkName, txnID, txDetails, esEmisor, esReceptor, tipo, confirmationStatus, blockHeight, error_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 5, , 6]);
-                miniscriptAddress_1 = MiniscriptObjet.getAddress();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDE9B</span> Consultando \u00FAltima transacci\u00F3n...", 'info');
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/address/").concat(miniscriptAddress_1, "/txs"))];
-            case 1: return [4 /*yield*/, (_a.sent()).json()];
-            case 2:
-                txHistory = _a.sent();
-                console.log('Transacciones:', txHistory);
-                if (!Array.isArray(txHistory) || txHistory.length === 0) {
-                    networkName = getNetworkName(explorer);
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDEAB</span> No se encontraron transacciones en la direcci\u00F3n: <a href=\"".concat(explorer, "/address/").concat(miniscriptAddress_1, "\" target=\"_blank\">").concat(miniscriptAddress_1, "</a>"), 'error');
-                    if (networkName === 'Testnet 4') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir transacci\u00F3n a trav\u00E9s de <a href=\"https://faucet.testnet4.dev/\" target=\"_blank\">faucet Testnet 4</a>", 'info');
-                    }
-                    else if (networkName === 'Testnet 3') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir transacci\u00F3n a trav\u00E9s de <a href=\"https://bitcoinfaucet.uo1.net/send.php\" target=\"_blank\">faucet Testnet 3</a>", 'info');
-                    }
-                    else {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\u26A0\uFE0F</span> La red seleccionada no tiene faucet disponible", 'info');
-                    }
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                    return [2 /*return*/];
-                }
-                txnID = txHistory.sort(function (a, b) { return b.status.block_height - a.status.block_height; })[0].txid;
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/tx/").concat(txnID))];
-            case 3: return [4 /*yield*/, (_a.sent()).json()];
-            case 4:
-                txDetails = _a.sent();
-                esEmisor = txDetails.vin.some(function (vin) { var _a; return ((_a = vin.prevout) === null || _a === void 0 ? void 0 : _a.scriptpubkey_address) === miniscriptAddress_1; });
-                esReceptor = txDetails.vout.some(function (vout) { return vout.scriptpubkey_address === miniscriptAddress_1; });
-                tipo = void 0;
-                if (esEmisor && esReceptor) {
-                    tipo = '<span aria-hidden="true">📤📥</span> Envío + Recepción (cambio)';
-                }
-                else if (esEmisor) {
-                    tipo = '<span aria-hidden="true">📤</span> <span class="output-error">Envío</span>';
-                }
-                else if (esReceptor) {
-                    tipo = '<span aria-hidden="true">📥</span> <span class="output-success">Recepción</span>';
-                }
-                else {
-                    tipo = '<span aria-hidden="true">🔍</span> Participación no directa';
-                }
-                confirmationStatus = txDetails.status.confirmed ? '<span class="output-success"><span aria-hidden="true">✅</span> confirmada</span>' : '<span class="output-error"><span aria-hidden="true">❓</span> no confirmada</span>';
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u2705</span> Transacci\u00F3n encontrada: <a href=\"".concat(explorer, "/tx/").concat(txnID, "\"target=\"_blank\"><code>").concat(txnID, "</code></a>"), 'success');
-                blockHeight = txDetails.status.block_height || 'Desconocido';
-                logToOutput(outputConsole, "Tipo: ".concat(tipo, " ").concat(confirmationStatus, " - Bloque: <strong>").concat(blockHeight, "</strong>"));
-                // Mostrar detalles de las entradas SOLO si la dirección es la del miniscript
-                if (esEmisor) {
-                    txDetails.vin.forEach(function (vin, index) {
-                        var _a, _b;
-                        var prevoutAddress = ((_a = vin.prevout) === null || _a === void 0 ? void 0 : _a.scriptpubkey_address) || 'Desconocido';
-                        var prevoutValue = ((_b = vin.prevout) === null || _b === void 0 ? void 0 : _b.value) || 'Desconocido';
-                        if (prevoutAddress === miniscriptAddress_1) {
-                            logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDE99</span> Fondos enviados: <strong>".concat(prevoutValue, "</strong> sats \u2192 ").concat(prevoutAddress, " <span aria-hidden=\"true\">\u2714\uFE0F</span>"), 'info');
-                        }
-                    });
-                }
-                // Mostrar detalles de las salidas SOLO si la dirección es la del miniscript
-                if (esReceptor) {
-                    txDetails.vout.forEach(function (vout, index) {
-                        if (vout.scriptpubkey_address === miniscriptAddress_1) {
-                            logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDE99</span> Fondos recibidos: <strong>".concat(vout.value, "</strong> sats \u2192 ").concat(vout.scriptpubkey_address, " <span aria-hidden=\"true\">\u2714\uFE0F</span>"), 'info');
-                        }
-                    });
-                }
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 6];
-            case 5:
-                error_4 = _a.sent();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u274C</span> Error al consultar la transacci\u00F3n: ".concat((error_4 === null || error_4 === void 0 ? void 0 : error_4.message) || 'Error desconocido'), 'error');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
+const fetchTransaction = (MiniscriptObjet, explorer) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const miniscriptAddress = MiniscriptObjet.getAddress();
+        logToOutput(outputConsole, `<span aria-hidden="true">🚛</span> Consultando última transacción...`, 'info');
+        // Obtener historial de transacciones
+        const txHistory = yield (yield fetch(`${explorer}/api/address/${miniscriptAddress}/txs`)).json();
+        console.log('Transacciones:', txHistory);
+        if (!Array.isArray(txHistory) || txHistory.length === 0) {
+            const networkName = getNetworkName(explorer);
+            logToOutput(outputConsole, `<span aria-hidden="true">🚫</span> No se encontraron transacciones en la dirección: <a href="${explorer}/address/${miniscriptAddress}" target="_blank">${miniscriptAddress}</a>`, 'error');
+            if (networkName === 'Testnet 4') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir transacción a través de <a href="https://faucet.testnet4.dev/" target="_blank">faucet Testnet 4</a>`, 'info');
+            }
+            else if (networkName === 'Testnet 3') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir transacción a través de <a href="https://bitcoinfaucet.uo1.net/send.php" target="_blank">faucet Testnet 3</a>`, 'info');
+            }
+            else {
+                logToOutput(outputConsole, `<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible`, 'info');
+            }
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+            return;
         }
-    });
-}); };
+        // Obtener detalles de la transacción con el block_height más alto, que indica la última transacción
+        const txnID = txHistory.sort((a, b) => b.status.block_height - a.status.block_height)[0].txid;
+        const txDetails = yield (yield fetch(`${explorer}/api/tx/${txnID}`)).json();
+        // Determinar si es envío o recepción
+        const esEmisor = txDetails.vin.some((vin) => { var _a; return ((_a = vin.prevout) === null || _a === void 0 ? void 0 : _a.scriptpubkey_address) === miniscriptAddress; });
+        const esReceptor = txDetails.vout.some((vout) => vout.scriptpubkey_address === miniscriptAddress);
+        let tipo;
+        if (esEmisor && esReceptor) {
+            tipo = '<span aria-hidden="true">📤📥</span> Envío + Recepción (cambio)';
+        }
+        else if (esEmisor) {
+            tipo = '<span aria-hidden="true">📤</span> <span class="output-error">Envío</span>';
+        }
+        else if (esReceptor) {
+            tipo = '<span aria-hidden="true">📥</span> <span class="output-success">Recepción</span>';
+        }
+        else {
+            tipo = '<span aria-hidden="true">🔍</span> Participación no directa';
+        }
+        const confirmationStatus = txDetails.status.confirmed ? '<span class="output-success"><span aria-hidden="true">✅</span> confirmada</span>' : '<span class="output-error"><span aria-hidden="true">❓</span> no confirmada</span>';
+        logToOutput(outputConsole, `<span aria-hidden="true">✅</span> Transacción encontrada: <a href="${explorer}/tx/${txnID}"target="_blank"><code>${txnID}</code></a>`, 'success');
+        const blockHeight = txDetails.status.block_height || 'Desconocido';
+        logToOutput(outputConsole, `Tipo: ${tipo} ${confirmationStatus} - Bloque: <strong>${blockHeight}</strong>`);
+        // Mostrar detalles de las entradas SOLO si la dirección es la del miniscript
+        if (esEmisor) {
+            txDetails.vin.forEach((vin, index) => {
+                var _a, _b;
+                const prevoutAddress = ((_a = vin.prevout) === null || _a === void 0 ? void 0 : _a.scriptpubkey_address) || 'Desconocido';
+                const prevoutValue = ((_b = vin.prevout) === null || _b === void 0 ? void 0 : _b.value) || 'Desconocido';
+                if (prevoutAddress === miniscriptAddress) {
+                    logToOutput(outputConsole, `<span aria-hidden="true">🪙</span> Fondos enviados: <strong>${prevoutValue}</strong> sats → ${prevoutAddress} <span aria-hidden="true">✔️</span>`, 'info');
+                }
+            });
+        }
+        // Mostrar detalles de las salidas SOLO si la dirección es la del miniscript
+        if (esReceptor) {
+            txDetails.vout.forEach((vout, index) => {
+                if (vout.scriptpubkey_address === miniscriptAddress) {
+                    logToOutput(outputConsole, `<span aria-hidden="true">🪙</span> Fondos recibidos: <strong>${vout.value}</strong> sats → ${vout.scriptpubkey_address} <span aria-hidden="true">✔️</span>`, 'info');
+                }
+            });
+        }
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+    catch (error) {
+        logToOutput(outputConsole, `<span aria-hidden="true">❌</span> Error al consultar la transacción: ${(error === null || error === void 0 ? void 0 : error.message) || 'Error desconocido'}`, 'error');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+});
 /************************ 🧓🏻  ACCESO DIRECTO  🔑:🔑  ************************/
-var directoPSBT = function (masterNode, network, explorer, wshDescriptor, originalBlockHeight) { return __awaiter(void 0, void 0, void 0, function () {
-    var actualBlockHeight, _a, restingBlocks, displayBlocks, blocksClass, progenKey, localMiniscriptObjet, miniscriptAddress, utxos, networkName_1, networkName, selectedFaucet, faucetMsg, utxo, txid, vout, valueIn, txHex, valueOut, psbt, finalizer, wshOutput, txFinal, txResponse, txId, error_5;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 9, , 10]);
-                console.log('Descriptor WSH:', wshDescriptor);
-                _a = parseInt;
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/blocks/tip/height"))];
-            case 1: return [4 /*yield*/, (_b.sent()).text()];
-            case 2:
-                actualBlockHeight = _a.apply(void 0, [_b.sent()]);
-                restingBlocks = originalBlockHeight - actualBlockHeight;
-                displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
-                blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
-                progenKey = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_PROGEN).concat(WSH_KEY_PATH)).publicKey;
-                localMiniscriptObjet = new Output({
-                    descriptor: wshDescriptor,
-                    network: network,
-                    signersPubKeys: [progenKey]
-                });
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDDD3\uD83C\uDFFB</span> Se ha pulsado el bot\u00F3n \"Acceso directo\"...", 'info');
-                miniscriptAddress = localMiniscriptObjet.getAddress();
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/address/").concat(miniscriptAddress, "/utxo"))];
-            case 3: return [4 /*yield*/, (_b.sent()).json()];
-            case 4:
-                utxos = _b.sent();
-                console.log('UTXOs:', utxos);
-                if (!Array.isArray(utxos) || utxos.length === 0) {
-                    networkName_1 = getNetworkName(explorer);
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDEAB</span> No se encontraron fondos en la direcci\u00F3n: <a href=\"".concat(explorer, "/address/").concat(miniscriptAddress, "\" target=\"_blank\">").concat(miniscriptAddress, "</a>"), 'error');
-                    if (networkName_1 === 'Testnet 4') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir fondos a trav\u00E9s de <a href=\"https://faucet.testnet4.dev/\" target=\"_blank\">faucet Testnet 4</a>", 'info');
-                    }
-                    else if (networkName_1 === 'Testnet 3') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir fondos a trav\u00E9s de <a href=\"https://bitcoinfaucet.uo1.net/send.php\" target=\"_blank\">faucet Testnet 3</a>", 'info');
-                    }
-                    else {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\u26A0\uFE0F</span> La red seleccionada no tiene faucet disponible.", 'info');
-                    }
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                    return [2 /*return*/];
-                }
-                networkName = getNetworkName(explorer);
-                selectedFaucet = TESTNET3_FAUCET;
-                if (networkName === 'Testnet 4') {
-                    selectedFaucet = TESTNET4_FAUCET;
-                }
-                faucetMsg = networkName === 'Testnet 4'
-                    ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 4</strong></code>'
-                    : networkName === 'Testnet 3'
-                        ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 3</strong></code>'
-                        : '<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible</strong></code>';
-                logToOutput(outputConsole, faucetMsg, 'info');
-                utxo = utxos.sort(function (a, b) { return a.status.block_height - b.status.block_height; })[0];
-                txid = utxo.txid, vout = utxo.vout, valueIn = utxo.value;
-                console.log('UTXOS:', utxos.sort(function (a, b) { return b.status.block_height - a.status.block_height; }));
-                console.log('UTXO:', utxo);
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/tx/").concat(txid, "/hex"))];
-            case 5: return [4 /*yield*/, (_b.sent()).text()];
-            case 6:
-                txHex = _b.sent();
-                valueOut = valueIn - FEE;
-                if (valueOut <= 0)
-                    throw new Error('El valor del UTXO no cubre la comisión');
-                psbt = new bitcoinjs_lib_1.Psbt({ network: network });
-                finalizer = localMiniscriptObjet.updatePsbtAsInput({ psbt: psbt, vout: vout, txHex: txHex });
-                wshOutput = new Output({
-                    descriptor: "addr(".concat(selectedFaucet, ")"),
-                    network: network
-                });
-                console.log('Objeto wsh expandido:', wshOutput.expand());
-                wshOutput.updatePsbtAsOutput({ psbt: psbt, value: valueOut });
-                // Firmar y finalizar la transacción
-                descriptors.signers.signBIP32({ psbt: psbt, masterNode: masterNode });
-                finalizer({ psbt: psbt });
-                txFinal = psbt.extractTransaction();
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/tx"), {
-                        method: 'POST',
-                        body: txFinal.toHex()
-                    })];
-            case 7: return [4 /*yield*/, (_b.sent()).text()];
-            case 8:
-                txResponse = _b.sent();
-                console.log("Pushing TX: ".concat(txFinal.toHex()));
-                console.log('Resultado TXID:', txResponse);
-                // Manejar el error "non-final"
-                if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDDF1</span> Bloques para poder gastar en la rama de acceso directo:  <strong class=\"".concat(blocksClass, "\">").concat(displayBlocks, "</strong>"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\u26CF\uFE0F</span> Los mineros han bloqueado la transacci\u00F3n", 'error');
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                }
-                else {
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDE99</span> Fondos enviados: <strong>".concat(valueIn, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCB8</span> Comisi\u00F3n: <strong>".concat(FEE, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCB0</span> Total transacci\u00F3n: <strong>".concat(valueOut, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\u270D\uD83C\uDFFC</span> Firmando la transacci\u00F3n con la clave del progenitor...", 'info');
-                    txId = txFinal.getId();
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDE9A</span> Transacci\u00F3n enviada: <a href=\"".concat(explorer, "/tx/").concat(txId, "?expand\" target=\"_blank\">").concat(txId, "</a>"), 'success');
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                }
-                return [3 /*break*/, 10];
-            case 9:
-                error_5 = _b.sent();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u274C</span> Error al enviar la transacci\u00F3n: ".concat((error_5 === null || error_5 === void 0 ? void 0 : error_5.message) || 'Error desconocido'), 'error');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 10];
-            case 10: return [2 /*return*/];
+const directoPSBT = (masterNode, network, explorer, wshDescriptor, originalBlockHeight) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log('Descriptor WSH:', wshDescriptor);
+        const actualBlockHeight = parseInt(yield (yield fetch(`${explorer}/api/blocks/tip/height`)).text());
+        const restingBlocks = originalBlockHeight - actualBlockHeight;
+        const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
+        const blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
+        // Crear un nuevo Output para la clave de emergencia
+        const progenKey = masterNode.derivePath(`m${WSH_ORIGIN_PATH_PROGEN}${WSH_KEY_PATH}`).publicKey;
+        const localMiniscriptObjet = new Output({
+            descriptor: wshDescriptor,
+            network,
+            signersPubKeys: [progenKey]
+        });
+        logToOutput(outputConsole, `<span aria-hidden="true">🧓🏻</span> Se ha pulsado el botón "Acceso directo"...`, 'info');
+        // Obtener la dirección de recepción desde el objeto global
+        const miniscriptAddress = localMiniscriptObjet.getAddress();
+        // Consultar UTXOs disponibles en la direccion del Miniscript
+        const utxos = yield (yield fetch(`${explorer}/api/address/${miniscriptAddress}/utxo`)).json();
+        console.log('UTXOs:', utxos);
+        if (!Array.isArray(utxos) || utxos.length === 0) {
+            const networkName = getNetworkName(explorer);
+            logToOutput(outputConsole, `<span aria-hidden="true">🚫</span> No se encontraron fondos en la dirección: <a href="${explorer}/address/${miniscriptAddress}" target="_blank">${miniscriptAddress}</a>`, 'error');
+            if (networkName === 'Testnet 4') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir fondos a través de <a href="https://faucet.testnet4.dev/" target="_blank">faucet Testnet 4</a>`, 'info');
+            }
+            else if (networkName === 'Testnet 3') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir fondos a través de <a href="https://bitcoinfaucet.uo1.net/send.php" target="_blank">faucet Testnet 3</a>`, 'info');
+            }
+            else {
+                logToOutput(outputConsole, `<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible.`, 'info');
+            }
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+            return;
         }
-    });
-}); };
+        // Determinar el faucet según la red
+        const networkName = getNetworkName(explorer);
+        let selectedFaucet = TESTNET3_FAUCET;
+        if (networkName === 'Testnet 4') {
+            selectedFaucet = TESTNET4_FAUCET;
+        }
+        // Mostrar mensaje de inicio solo si hay UTXOs disponibles
+        const faucetMsg = networkName === 'Testnet 4'
+            ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 4</strong></code>'
+            : networkName === 'Testnet 3'
+                ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 3</strong></code>'
+                : '<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible</strong></code>';
+        logToOutput(outputConsole, faucetMsg, 'info');
+        // Seleccionar el UTXO más antiguo
+        const utxo = utxos.sort((a, b) => a.status.block_height - b.status.block_height)[0];
+        const { txid, vout, value: valueIn } = utxo;
+        console.log('UTXOS:', utxos.sort((a, b) => b.status.block_height - a.status.block_height));
+        console.log('UTXO:', utxo);
+        // Obtener la transacción  en formato HEX
+        const txHex = yield (yield fetch(`${explorer}/api/tx/${txid}/hex`)).text();
+        // Lanzar error si el UTXO no cubre la comisión
+        const valueOut = valueIn - FEE;
+        if (valueOut <= 0)
+            throw new Error('El valor del UTXO no cubre la comisión');
+        // Crear la transacción PSBT
+        const psbt = new bitcoinjs_lib_1.Psbt({ network });
+        // Crear el finalizador con los inputs
+        const finalizer = localMiniscriptObjet.updatePsbtAsInput({ psbt, vout, txHex });
+        // Crear un Output WSH para usar como output en la transacción y enviar los fondos
+        const wshOutput = new Output({
+            descriptor: `addr(${selectedFaucet})`,
+            network
+        });
+        console.log('Objeto wsh expandido:', wshOutput.expand());
+        wshOutput.updatePsbtAsOutput({ psbt, value: valueOut });
+        // Firmar y finalizar la transacción
+        descriptors.signers.signBIP32({ psbt, masterNode });
+        finalizer({ psbt });
+        // Extraer y transmitir la transacción
+        const txFinal = psbt.extractTransaction();
+        const txResponse = yield (yield fetch(`${explorer}/api/tx`, {
+            method: 'POST',
+            body: txFinal.toHex()
+        })).text();
+        console.log(`Pushing TX: ${txFinal.toHex()}`);
+        console.log('Resultado TXID:', txResponse);
+        // Manejar el error "non-final"
+        if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
+            logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama de acceso directo:  <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">⛏️</span> Los mineros han bloqueado la transacción`, 'error');
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+        }
+        else {
+            logToOutput(outputConsole, `<span aria-hidden="true">🪙</span> Fondos enviados: <strong>${valueIn}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">💸</span> Comisión: <strong>${FEE}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">💰</span> Total transacción: <strong>${valueOut}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">✍🏼</span> Firmando la transacción con la clave del progenitor...`, 'info');
+            const txId = txFinal.getId();
+            logToOutput(outputConsole, `<span aria-hidden="true">🚚</span> Transacción enviada: <a href="${explorer}/tx/${txId}?expand" target="_blank">${txId}</a>`, 'success');
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+        }
+    }
+    catch (error) {
+        logToOutput(outputConsole, `<span aria-hidden="true">❌</span> Error al enviar la transacción: ${(error === null || error === void 0 ? void 0 : error.message) || 'Error desconocido'}`, 'error');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+});
 /************************ 🧑🏻👨🏻  HERENCIA 🔑🔑:🔑🔑  ************************/
-var herenciaPSBT = function (masterNode, network, explorer, wshDescriptor, originalBlockHeight) { return __awaiter(void 0, void 0, void 0, function () {
-    var actualBlockHeight, _a, restingBlocks, displayBlocks, blocksClass, key_descend_1, key_descend_2, localMiniscriptObjet, miniscriptAddress, utxos, networkName_2, networkName, selectedFaucet, faucetMsg, utxo, txid, vout, valueIn, txHex, valueOut, psbt, finalizer, wshOutput, txFinal, txResponse, txId, error_6, errorDetails;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 9, , 10]);
-                console.log('Descriptor WSH:', wshDescriptor);
-                _a = parseInt;
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/blocks/tip/height"))];
-            case 1: return [4 /*yield*/, (_b.sent()).text()];
-            case 2:
-                actualBlockHeight = _a.apply(void 0, [_b.sent()]);
-                restingBlocks = originalBlockHeight + BLOCKS_HERENCIA - actualBlockHeight;
-                displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
-                blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
-                key_descend_1 = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_DESCEN_1).concat(WSH_KEY_PATH)).publicKey;
-                key_descend_2 = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_DESCEN_2).concat(WSH_KEY_PATH)).publicKey;
-                localMiniscriptObjet = new Output({
-                    descriptor: wshDescriptor,
-                    network: network,
-                    signersPubKeys: [key_descend_1, key_descend_2]
-                });
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDDD1\uD83C\uDFFB\uD83D\uDC68\uD83C\uDFFB</span> Se ha pulsado el bot\u00F3n \"Herencia\"...", 'info');
-                miniscriptAddress = localMiniscriptObjet.getAddress();
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/address/").concat(miniscriptAddress, "/utxo"))];
-            case 3: return [4 /*yield*/, (_b.sent()).json()];
-            case 4:
-                utxos = _b.sent();
-                console.log('UTXOs:', utxos);
-                if (!Array.isArray(utxos) || utxos.length === 0) {
-                    networkName_2 = getNetworkName(explorer);
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDEAB</span> No se encontraron fondos en la direcci\u00F3n: <a href=\"".concat(explorer, "/address/").concat(miniscriptAddress, "\" target=\"_blank\">").concat(miniscriptAddress, "</a>"), 'error');
-                    if (networkName_2 === 'Testnet 4') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir fondos a trav\u00E9s de <a href=\"https://faucet.testnet4.dev/\" target=\"_blank\">faucet Testnet 4</a>", 'info');
-                    }
-                    else if (networkName_2 === 'Testnet 3') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir fondos a trav\u00E9s de <a href=\"https://bitcoinfaucet.uo1.net/send.php\" target=\"_blank\">faucet Testnet 3</a>", 'info');
-                    }
-                    else {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\u26A0\uFE0F</span> La red seleccionada no tiene faucet disponible.", 'info');
-                    }
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                    return [2 /*return*/];
-                }
-                networkName = getNetworkName(explorer);
-                selectedFaucet = TESTNET3_FAUCET;
-                if (networkName === 'Testnet 4') {
-                    selectedFaucet = TESTNET4_FAUCET;
-                }
-                faucetMsg = networkName === 'Testnet 4'
-                    ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 4</strong></code>'
-                    : networkName === 'Testnet 3'
-                        ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 3</strong></code>'
-                        : '<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible</strong></code>';
-                logToOutput(outputConsole, faucetMsg, 'info');
-                utxo = utxos.sort(function (a, b) { return a.status.block_height - b.status.block_height; })[0];
-                txid = utxo.txid, vout = utxo.vout, valueIn = utxo.value;
-                console.log('UTXOS:', utxos.sort(function (a, b) { return b.status.block_height - a.status.block_height; }));
-                console.log('UTXO:', utxo);
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/tx/").concat(txid, "/hex"))];
-            case 5: return [4 /*yield*/, (_b.sent()).text()];
-            case 6:
-                txHex = _b.sent();
-                valueOut = valueIn - FEE;
-                if (valueOut <= 0)
-                    throw new Error('El valor del UTXO no cubre la comisión');
-                psbt = new bitcoinjs_lib_1.Psbt({ network: network });
-                finalizer = localMiniscriptObjet.updatePsbtAsInput({ psbt: psbt, vout: vout, txHex: txHex });
-                wshOutput = new Output({
-                    descriptor: "addr(".concat(selectedFaucet, ")"),
-                    network: network
-                });
-                console.log('Objeto wsh expandido:', wshOutput.expand());
-                wshOutput.updatePsbtAsOutput({ psbt: psbt, value: valueOut });
-                // Firmar y finalizar la transacción
-                descriptors.signers.signBIP32({ psbt: psbt, masterNode: masterNode });
-                finalizer({ psbt: psbt });
-                txFinal = psbt.extractTransaction();
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/tx"), {
-                        method: 'POST',
-                        body: txFinal.toHex()
-                    })];
-            case 7: return [4 /*yield*/, (_b.sent()).text()];
-            case 8:
-                txResponse = _b.sent();
-                console.log("Pushing: ".concat(txFinal.toHex()));
-                console.log('Resultado TXID:', txResponse);
-                // Manejar el error "non-final"
-                if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDDF1</span> Bloques para poder gastar en la rama de herencia: <strong class=\"".concat(blocksClass, "\">").concat(displayBlocks, "</strong>"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\u26CF\uFE0F</span> Los mineros han bloqueado la transacci\u00F3n", 'error');
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                }
-                else {
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDE99</span> Fondos enviados: <strong>".concat(valueIn, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCB8</span> Comisi\u00F3n: <strong>".concat(FEE, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCB0</span> Total transacci\u00F3n: <strong>".concat(valueOut, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\u270D\uD83C\uDFFB\u270D\uD83C\uDFFC</span> Firmando la transacci\u00F3n con las claves de los herederos...", 'info');
-                    txId = txFinal.getId();
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDE9A</span> Transacci\u00F3n enviada: <a href=\"".concat(explorer, "/tx/").concat(txId, "?expand\" target=\"_blank\">").concat(txId, "</a>"), 'success');
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                }
-                return [3 /*break*/, 10];
-            case 9:
-                error_6 = _b.sent();
-                errorDetails = error_6.message || 'Error desconocido';
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u274C</span> Error al enviar la transacci\u00F3n: ".concat((error_6 === null || error_6 === void 0 ? void 0 : error_6.message) || 'Error desconocido'), 'error');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 10];
-            case 10: return [2 /*return*/];
+const herenciaPSBT = (masterNode, network, explorer, wshDescriptor, originalBlockHeight) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log('Descriptor WSH:', wshDescriptor);
+        const actualBlockHeight = parseInt(yield (yield fetch(`${explorer}/api/blocks/tip/height`)).text());
+        const { herencia: blocksHer3 } = getBlocksFromUI();
+        const restingBlocks = originalBlockHeight + blocksHer3 - actualBlockHeight;
+        const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
+        const blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
+        // Crear un nuevo output para la clave de emergencia
+        const key_descend_1 = masterNode.derivePath(`m${WSH_ORIGIN_PATH_DESCEN_1}${WSH_KEY_PATH}`).publicKey;
+        const key_descend_2 = masterNode.derivePath(`m${WSH_ORIGIN_PATH_DESCEN_2}${WSH_KEY_PATH}`).publicKey;
+        const localMiniscriptObjet = new Output({
+            descriptor: wshDescriptor,
+            network,
+            signersPubKeys: [key_descend_1, key_descend_2]
+        });
+        logToOutput(outputConsole, `<span aria-hidden="true">🧑🏻👨🏻</span> Se ha pulsado el botón "Herencia"...`, 'info');
+        // Obtener la dirección de recepción desde el objeto global
+        const miniscriptAddress = localMiniscriptObjet.getAddress();
+        // Consultar UTXOs disponibles en la direccion del Miniscript
+        const utxos = yield (yield fetch(`${explorer}/api/address/${miniscriptAddress}/utxo`)).json();
+        console.log('UTXOs:', utxos);
+        if (!Array.isArray(utxos) || utxos.length === 0) {
+            const networkName = getNetworkName(explorer);
+            logToOutput(outputConsole, `<span aria-hidden="true">🚫</span> No se encontraron fondos en la dirección: <a href="${explorer}/address/${miniscriptAddress}" target="_blank">${miniscriptAddress}</a>`, 'error');
+            if (networkName === 'Testnet 4') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir fondos a través de <a href="https://faucet.testnet4.dev/" target="_blank">faucet Testnet 4</a>`, 'info');
+            }
+            else if (networkName === 'Testnet 3') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir fondos a través de <a href="https://bitcoinfaucet.uo1.net/send.php" target="_blank">faucet Testnet 3</a>`, 'info');
+            }
+            else {
+                logToOutput(outputConsole, `<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible.`, 'info');
+            }
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+            return;
         }
-    });
-}); };
+        // Determinar el faucet según la red
+        const networkName = getNetworkName(explorer);
+        let selectedFaucet = TESTNET3_FAUCET;
+        if (networkName === 'Testnet 4') {
+            selectedFaucet = TESTNET4_FAUCET;
+        }
+        // Mostrar mensaje de inicio solo si hay UTXOs disponibles
+        const faucetMsg = networkName === 'Testnet 4'
+            ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 4</strong></code>'
+            : networkName === 'Testnet 3'
+                ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 3</strong></code>'
+                : '<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible</strong></code>';
+        logToOutput(outputConsole, faucetMsg, 'info');
+        // Seleccionar el UTXO más antiguo
+        const utxo = utxos.sort((a, b) => a.status.block_height - b.status.block_height)[0];
+        const { txid, vout, value: valueIn } = utxo;
+        console.log('UTXOS:', utxos.sort((a, b) => b.status.block_height - a.status.block_height));
+        console.log('UTXO:', utxo);
+        // Obtener la transacción  en formato HEX
+        const txHex = yield (yield fetch(`${explorer}/api/tx/${txid}/hex`)).text();
+        // Lanzar error si el UTXO no cubre la comisión
+        const valueOut = valueIn - FEE;
+        if (valueOut <= 0)
+            throw new Error('El valor del UTXO no cubre la comisión');
+        // Crear la transacción PSBT
+        const psbt = new bitcoinjs_lib_1.Psbt({ network });
+        // Crear el finalizador con los inputs
+        const finalizer = localMiniscriptObjet.updatePsbtAsInput({ psbt, vout, txHex });
+        // Crear un Output WSH para usar como output en la transacción y enviar los fondos
+        const wshOutput = new Output({
+            descriptor: `addr(${selectedFaucet})`,
+            network
+        });
+        console.log('Objeto wsh expandido:', wshOutput.expand());
+        wshOutput.updatePsbtAsOutput({ psbt, value: valueOut });
+        // Firmar y finalizar la transacción
+        descriptors.signers.signBIP32({ psbt, masterNode });
+        finalizer({ psbt });
+        // Extraer y transmitir la transacción
+        const txFinal = psbt.extractTransaction();
+        const txResponse = yield (yield fetch(`${explorer}/api/tx`, {
+            method: 'POST',
+            body: txFinal.toHex()
+        })).text();
+        console.log(`Pushing: ${txFinal.toHex()}`);
+        console.log('Resultado TXID:', txResponse);
+        // Manejar el error "non-final"
+        if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
+            logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama de herencia: <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">⛏️</span> Los mineros han bloqueado la transacción`, 'error');
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+        }
+        else {
+            logToOutput(outputConsole, `<span aria-hidden="true">🪙</span> Fondos enviados: <strong>${valueIn}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">💸</span> Comisión: <strong>${FEE}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">💰</span> Total transacción: <strong>${valueOut}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">✍🏻✍🏼</span> Firmando la transacción con las claves de los herederos...`, 'info');
+            const txId = txFinal.getId();
+            logToOutput(outputConsole, `<span aria-hidden="true">🚚</span> Transacción enviada: <a href="${explorer}/tx/${txId}?expand" target="_blank">${txId}</a>`, 'success');
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+        }
+    }
+    catch (error) {
+        const errorDetails = error.message || 'Error desconocido';
+        logToOutput(outputConsole, `<span aria-hidden="true">❌</span> Error al enviar la transacción: ${(error === null || error === void 0 ? void 0 : error.message) || 'Error desconocido'}`, 'error');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+});
 /************************ 👤 DISPUTA 🔑:🔑  ************************/
-var disputaPSBT = function (masterNode, network, explorer, wshDescriptor, originalBlockHeight) { return __awaiter(void 0, void 0, void 0, function () {
-    var actualBlockHeight, _a, restingBlocks, displayBlocks, blocksClass, abogadoKey, localMiniscriptObjet, miniscriptAddress, utxos, networkName_3, networkName, selectedFaucet, faucetMsg, utxo, txid, vout, valueIn, txHex, valueOut, psbt, finalizer, wshOutput, txFinal, txResponse, txId, error_7;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 9, , 10]);
-                console.log('Descriptor WSH:', wshDescriptor);
-                _a = parseInt;
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/blocks/tip/height"))];
-            case 1: return [4 /*yield*/, (_b.sent()).text()];
-            case 2:
-                actualBlockHeight = _a.apply(void 0, [_b.sent()]);
-                restingBlocks = originalBlockHeight + BLOCKS_RECOVERY - actualBlockHeight;
-                displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
-                blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
-                abogadoKey = masterNode.derivePath("m".concat(WSH_ORIGIN_PATH_RECOVERY).concat(WSH_KEY_PATH)).publicKey;
-                localMiniscriptObjet = new Output({
-                    descriptor: wshDescriptor,
-                    network: network,
-                    signersPubKeys: [abogadoKey]
-                });
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDC64</span> Se ha pulsado el bot\u00F3n \"Disputa\"...", 'info');
-                miniscriptAddress = localMiniscriptObjet.getAddress();
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/address/").concat(miniscriptAddress, "/utxo"))];
-            case 3: return [4 /*yield*/, (_b.sent()).json()];
-            case 4:
-                utxos = _b.sent();
-                console.log('UTXOs:', utxos);
-                if (!Array.isArray(utxos) || utxos.length === 0) {
-                    networkName_3 = getNetworkName(explorer);
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDEAB</span> No se encontraron fondos en la direcci\u00F3n: <a href=\"".concat(explorer, "/address/").concat(miniscriptAddress, "\" target=\"_blank\">").concat(miniscriptAddress, "</a>"), 'error');
-                    if (networkName_3 === 'Testnet 4') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir fondos a trav\u00E9s de <a href=\"https://faucet.testnet4.dev/\" target=\"_blank\">faucet Testnet 4</a>", 'info');
-                    }
-                    else if (networkName_3 === 'Testnet 3') {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCA7</span> Recibir fondos a trav\u00E9s de <a href=\"https://bitcoinfaucet.uo1.net/send.php\" target=\"_blank\">faucet Testnet 3</a>", 'info');
-                    }
-                    else {
-                        logToOutput(outputConsole, "<span aria-hidden=\"true\">\u26A0\uFE0F</span> La red seleccionada no tiene faucet disponible.", 'info');
-                    }
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                    return [2 /*return*/];
-                }
-                networkName = getNetworkName(explorer);
-                selectedFaucet = TESTNET3_FAUCET;
-                if (networkName === 'Testnet 4') {
-                    selectedFaucet = TESTNET4_FAUCET;
-                }
-                faucetMsg = networkName === 'Testnet 4'
-                    ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 4</strong></code>'
-                    : networkName === 'Testnet 3'
-                        ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 3</strong></code>'
-                        : '<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible</strong></code>';
-                logToOutput(outputConsole, faucetMsg, 'info');
-                utxo = utxos.sort(function (a, b) { return a.status.block_height - b.status.block_height; })[0];
-                txid = utxo.txid, vout = utxo.vout, valueIn = utxo.value;
-                console.log('UTXOS:', utxos.sort(function (a, b) { return b.status.block_height - a.status.block_height; }));
-                console.log('UTXO:', utxo);
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/tx/").concat(txid, "/hex"))];
-            case 5: return [4 /*yield*/, (_b.sent()).text()];
-            case 6:
-                txHex = _b.sent();
-                valueOut = valueIn - FEE;
-                if (valueOut <= 0)
-                    throw new Error('El valor del UTXO no cubre la comisión');
-                psbt = new bitcoinjs_lib_1.Psbt({ network: network });
-                finalizer = localMiniscriptObjet.updatePsbtAsInput({ psbt: psbt, vout: vout, txHex: txHex });
-                wshOutput = new Output({
-                    descriptor: "addr(".concat(selectedFaucet, ")"),
-                    network: network
-                });
-                console.log('Objeto wsh expandido:', wshOutput.expand());
-                wshOutput.updatePsbtAsOutput({ psbt: psbt, value: valueOut });
-                // Firmar y finalizar la transacción
-                descriptors.signers.signBIP32({ psbt: psbt, masterNode: masterNode });
-                finalizer({ psbt: psbt });
-                txFinal = psbt.extractTransaction();
-                return [4 /*yield*/, fetch("".concat(explorer, "/api/tx"), {
-                        method: 'POST',
-                        body: txFinal.toHex()
-                    })];
-            case 7: return [4 /*yield*/, (_b.sent()).text()];
-            case 8:
-                txResponse = _b.sent();
-                console.log("Pushing: ".concat(txFinal.toHex()));
-                console.log('Resultado TXID:', txResponse);
-                // Manejar el error "non-final"
-                if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDDF1</span> Bloques para poder gastar en la rama de disputa: <strong class=\"".concat(blocksClass, "\">").concat(displayBlocks, "</strong>"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\u26CF\uFE0F</span> Los mineros han bloqueado la transacci\u00F3n", 'error');
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                }
-                else {
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83E\uDE99</span> Fondos enviados: <strong>".concat(valueIn, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCB8</span> Comisi\u00F3n: <strong>".concat(FEE, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDCB0</span> Total transacci\u00F3n: <strong>".concat(valueOut, "</strong> sats"), 'info');
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\u270D\uD83C\uDFFC</span> Firmando la transacci\u00F3n con  la clave del abogado...", 'info');
-                    txId = txFinal.getId();
-                    logToOutput(outputConsole, "<span aria-hidden=\"true\">\uD83D\uDE9A</span> Transacci\u00F3n enviada: <a href=\"".concat(explorer, "/tx/").concat(txId, "?expand\" target=\"_blank\">").concat(txId, "</a>"), 'success');
-                    logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                }
-                return [3 /*break*/, 10];
-            case 9:
-                error_7 = _b.sent();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u274C</span> Error al enviar la transacci\u00F3n: ".concat((error_7 === null || error_7 === void 0 ? void 0 : error_7.message) || 'Error desconocido'), 'error');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 10];
-            case 10: return [2 /*return*/];
+const disputaPSBT = (masterNode, network, explorer, wshDescriptor, originalBlockHeight) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log('Descriptor WSH:', wshDescriptor);
+        const actualBlockHeight = parseInt(yield (yield fetch(`${explorer}/api/blocks/tip/height`)).text());
+        const restingBlocks = originalBlockHeight + BLOCKS_RECOVERY - actualBlockHeight;
+        const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
+        const blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
+        // Crear un nuevo output para la clave de emergencia
+        const abogadoKey = masterNode.derivePath(`m${WSH_ORIGIN_PATH_RECOVERY}${WSH_KEY_PATH}`).publicKey;
+        const localMiniscriptObjet = new Output({
+            descriptor: wshDescriptor,
+            network,
+            signersPubKeys: [abogadoKey]
+        });
+        logToOutput(outputConsole, `<span aria-hidden="true">👤</span> Se ha pulsado el botón "Disputa"...`, 'info');
+        // Obtener la dirección de envio
+        const miniscriptAddress = localMiniscriptObjet.getAddress();
+        // Consultar UTXOs disponibles en la direccion del Miniscript
+        const utxos = yield (yield fetch(`${explorer}/api/address/${miniscriptAddress}/utxo`)).json();
+        console.log('UTXOs:', utxos);
+        if (!Array.isArray(utxos) || utxos.length === 0) {
+            const networkName = getNetworkName(explorer);
+            logToOutput(outputConsole, `<span aria-hidden="true">🚫</span> No se encontraron fondos en la dirección: <a href="${explorer}/address/${miniscriptAddress}" target="_blank">${miniscriptAddress}</a>`, 'error');
+            if (networkName === 'Testnet 4') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir fondos a través de <a href="https://faucet.testnet4.dev/" target="_blank">faucet Testnet 4</a>`, 'info');
+            }
+            else if (networkName === 'Testnet 3') {
+                logToOutput(outputConsole, `<span aria-hidden="true">💧</span> Recibir fondos a través de <a href="https://bitcoinfaucet.uo1.net/send.php" target="_blank">faucet Testnet 3</a>`, 'info');
+            }
+            else {
+                logToOutput(outputConsole, `<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible.`, 'info');
+            }
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+            return;
         }
-    });
-}); };
+        // Determinar el faucet según la red
+        const networkName = getNetworkName(explorer);
+        let selectedFaucet = TESTNET3_FAUCET;
+        if (networkName === 'Testnet 4') {
+            selectedFaucet = TESTNET4_FAUCET;
+        }
+        // Mostrar mensaje de inicio solo si hay UTXOs disponibles
+        const faucetMsg = networkName === 'Testnet 4'
+            ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 4</strong></code>'
+            : networkName === 'Testnet 3'
+                ? '<span aria-hidden="true">📦</span> Devolviendo fondos a <code><strong>Faucet Testnet 3</strong></code>'
+                : '<span aria-hidden="true">⚠️</span> La red seleccionada no tiene faucet disponible</strong></code>';
+        logToOutput(outputConsole, faucetMsg, 'info');
+        // Seleccionar el UTXO más antiguo
+        const utxo = utxos.sort((a, b) => a.status.block_height - b.status.block_height)[0];
+        const { txid, vout, value: valueIn } = utxo;
+        console.log('UTXOS:', utxos.sort((a, b) => b.status.block_height - a.status.block_height));
+        console.log('UTXO:', utxo);
+        // Obtener la transacción  en formato HEX
+        const txHex = yield (yield fetch(`${explorer}/api/tx/${txid}/hex`)).text();
+        // Lanzar error si el UTXO no cubre la comisión
+        const valueOut = valueIn - FEE;
+        if (valueOut <= 0)
+            throw new Error('El valor del UTXO no cubre la comisión');
+        // Crear la transacción PSBT
+        const psbt = new bitcoinjs_lib_1.Psbt({ network });
+        // Crear el finalizador con los inputs
+        const finalizer = localMiniscriptObjet.updatePsbtAsInput({ psbt, vout, txHex });
+        // Crear un Output WSH para usar como output en la transacción y enviar los fondos
+        const wshOutput = new Output({
+            descriptor: `addr(${selectedFaucet})`,
+            network
+        });
+        console.log('Objeto wsh expandido:', wshOutput.expand());
+        wshOutput.updatePsbtAsOutput({ psbt, value: valueOut });
+        // Firmar y finalizar la transacción
+        descriptors.signers.signBIP32({ psbt, masterNode });
+        finalizer({ psbt });
+        // Extraer y transmitir la transacción
+        const txFinal = psbt.extractTransaction();
+        const txResponse = yield (yield fetch(`${explorer}/api/tx`, {
+            method: 'POST',
+            body: txFinal.toHex()
+        })).text();
+        console.log(`Pushing: ${txFinal.toHex()}`);
+        console.log('Resultado TXID:', txResponse);
+        // Manejar el error "non-final"
+        if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
+            logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama de disputa: <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">⛏️</span> Los mineros han bloqueado la transacción`, 'error');
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+        }
+        else {
+            logToOutput(outputConsole, `<span aria-hidden="true">🪙</span> Fondos enviados: <strong>${valueIn}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">💸</span> Comisión: <strong>${FEE}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">💰</span> Total transacción: <strong>${valueOut}</strong> sats`, 'info');
+            logToOutput(outputConsole, `<span aria-hidden="true">✍🏼</span> Firmando la transacción con  la clave del abogado...`, 'info');
+            const txId = txFinal.getId();
+            logToOutput(outputConsole, `<span aria-hidden="true">🚚</span> Transacción enviada: <a href="${explorer}/tx/${txId}?expand" target="_blank">${txId}</a>`, 'success');
+            logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+        }
+    }
+    catch (error) {
+        logToOutput(outputConsole, `<span aria-hidden="true">❌</span> Error al enviar la transacción: ${(error === null || error === void 0 ? void 0 : error.message) || 'Error desconocido'}`, 'error');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+});
 /************************ 🛜 CONECTAR CON LA RED BITCOIN Y LLAMADAS AL RESTO DE BOTONES  ************************/
-var initializeNetwork = function (network, explorer) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, MiniscriptObjet_1, originalBlockHeight_1, masterNode_1, wshDescriptor_1, error_8;
-    var _b, _c, _d, _e, _f, _g;
-    return __generator(this, function (_h) {
-        switch (_h.label) {
-            case 0:
-                _h.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, initMiniscriptObjet(network, explorer)];
-            case 1:
-                _a = _h.sent(), MiniscriptObjet_1 = _a.MiniscriptObjet, originalBlockHeight_1 = _a.originalBlockHeight, masterNode_1 = _a.masterNode, wshDescriptor_1 = _a.wshDescriptor;
-                (_b = document.getElementById('showMiniscriptBtn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () { return mostrarMiniscript(MiniscriptObjet_1, originalBlockHeight_1, explorer); });
-                (_c = document.getElementById('fetchUtxosBtn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', function () { return fetchUtxosMini(MiniscriptObjet_1, explorer); });
-                (_d = document.getElementById('fetchTransactionBtn')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', function () { return fetchTransaction(MiniscriptObjet_1, explorer); });
-                (_e = document.getElementById('directBtn')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', function () { return directoPSBT(masterNode_1, network, explorer, wshDescriptor_1, originalBlockHeight_1); });
-                (_f = document.getElementById('herenciaBtn')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', function () { return herenciaPSBT(masterNode_1, network, explorer, wshDescriptor_1, originalBlockHeight_1); });
-                (_g = document.getElementById('disputaBtn')) === null || _g === void 0 ? void 0 : _g.addEventListener('click', function () { return disputaPSBT(masterNode_1, network, explorer, wshDescriptor_1, originalBlockHeight_1); });
-                return [3 /*break*/, 3];
-            case 2:
-                error_8 = _h.sent();
-                logToOutput(outputConsole, "<span aria-hidden=\"true\">\u274C</span> Error al inicializar el Miniscript: ".concat((error_8 === null || error_8 === void 0 ? void 0 : error_8.message) || 'Error desconocido'), 'error');
-                logToOutput(outputConsole, "<hr style=\"border:1px dashed #ccc;\">");
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
+const initializeNetwork = (network, explorer) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b, _c, _d, _e, _f;
+    try {
+        const { MiniscriptObjet, originalBlockHeight, masterNode, wshDescriptor } = yield initMiniscriptObjet(network, explorer);
+        (_a = document.getElementById('showMiniscriptBtn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => mostrarMiniscript(MiniscriptObjet, originalBlockHeight, explorer));
+        (_b = document.getElementById('fetchUtxosBtn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => fetchUtxosMini(MiniscriptObjet, explorer));
+        (_c = document.getElementById('fetchTransactionBtn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => fetchTransaction(MiniscriptObjet, explorer));
+        (_d = document.getElementById('directBtn')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', () => directoPSBT(masterNode, network, explorer, wshDescriptor, originalBlockHeight));
+        (_e = document.getElementById('herenciaBtn')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', () => herenciaPSBT(masterNode, network, explorer, wshDescriptor, originalBlockHeight));
+        (_f = document.getElementById('disputaBtn')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', () => disputaPSBT(masterNode, network, explorer, wshDescriptor, originalBlockHeight));
+    }
+    catch (error) {
+        logToOutput(outputConsole, `<span aria-hidden="true">❌</span> Error al inicializar el Miniscript: ${(error === null || error === void 0 ? void 0 : error.message) || 'Error desconocido'}`, 'error');
+        logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
+    }
+});
 /************************ 🔘 LLAMADAS A LOS BOTONES INICAR  RED   ************************/
 // Inicializar el Miniscript en la red de testnet3
-(_a = document.getElementById('initTestnet3Btn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () { return initializeNetwork(bitcoinjs_lib_1.networks.testnet, 'https://mempool.space/testnet'); });
+(_a = document.getElementById('initTestnet3Btn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => initializeNetwork(bitcoinjs_lib_1.networks.testnet, 'https://mempool.space/testnet'));
 // Inicializar el Miniscript en la red de testnet4
-(_b = document.getElementById('initTestnet4Btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () { return initializeNetwork(bitcoinjs_lib_1.networks.testnet, 'https://mempool.space/testnet4'); });
+(_b = document.getElementById('initTestnet4Btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => initializeNetwork(bitcoinjs_lib_1.networks.testnet, 'https://mempool.space/testnet4'));
 // Borrar consola
-(_c = document.getElementById('clearOutputBtn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', function () {
+(_c = document.getElementById('clearOutputBtn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
     outputConsole.innerHTML = '';
 });
 

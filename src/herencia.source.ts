@@ -97,6 +97,22 @@ const getNetworkName = (explorer: string): string => {
   return 'Desconocida';
 };
 
+// Leer número de bloques desde la interfaz (inputs con id 'blocks-herencia' y 'blocks-disputa')
+function getBlocksFromUI(): { herencia: number; recovery: number } {
+  try {
+    const h = document.getElementById('blocks-herencia') as HTMLInputElement | null;
+    const d = document.getElementById('blocks-disputa') as HTMLInputElement | null;
+    const her = h ? parseInt(h.value, 10) : BLOCKS_HERENCIA;
+    const rec = d ? parseInt(d.value, 10) : BLOCKS_RECOVERY;
+    return {
+      herencia: Number.isNaN(her) ? BLOCKS_HERENCIA : Math.max(1, her),
+      recovery: Number.isNaN(rec) ? BLOCKS_RECOVERY : Math.max(1, rec),
+    };
+  } catch (e) {
+    return { herencia: BLOCKS_HERENCIA, recovery: BLOCKS_RECOVERY };
+  }
+}
+
 // Función para mostrar mensajes en la interfaz de usuario
 const logToOutput = (outputContainer: HTMLElement, message: string, type: OutputType = 'info'): void => {
   const paragraph = document.createElement('p');
@@ -123,7 +139,7 @@ function enableButtons(): void {
 // Mensaje de bienvenida
 logToOutput(
   outputConsole,
-  '<span aria-hidden="true">🚀</span> Iniciar en red de pruebas:  <span aria-hidden="true">▶️</span> <a href="#" onclick="document.getElementById(\'initTestnet4Btn\').click();return false;">Testnet 4</a>',
+  '<span aria-hidden="true">🚀</span> Iniciar en red de pruebas: <a href="#" onclick="document.getElementById(\'initTestnet3Btn\').click();return false;">Testnet 3</a> o <a href="#" onclick="document.getElementById(\'initTestnet4Btn\').click();return false;">Testnet 4</a>',
   'info'
 );
 /************************ ▶️ INICIALIZAR EL MINISCRIPT  ************************/
@@ -160,9 +176,11 @@ const initMiniscriptObjet = async (
     logToOutput(outputConsole,  '<span aria-hidden="true">🌟</span> ¡El Playground ha sido inicializado con éxito! <span aria-hidden="true">🌟</span>', 'success');
     logToOutput(outputConsole,  `<hr style="border:1px dashed #ccc;">`);
 
-    // Calcular el valor de "after" basado en la altura actual del bloque y el número de bloques de espera
-    const herencia = afterEncode({ blocks: originalBlockHeight + BLOCKS_HERENCIA });
-    const recovery = afterEncode({ blocks: originalBlockHeight + BLOCKS_RECOVERY });
+  // Leer valores configurables desde la UI (si el usuario ha cambiado los inputs)
+  const { herencia: blocksHer, recovery: blocksRec } = getBlocksFromUI();
+  // Calcular el valor de "after" basado en la altura actual del bloque y el número de bloques de espera
+  const herencia = afterEncode({ blocks: originalBlockHeight + blocksHer });
+  const recovery = afterEncode({ blocks: originalBlockHeight + blocksRec });
 
     // Crear la política de gasto basada en el valor de "after"
     const policy = POLICY(herencia, recovery);
@@ -272,8 +290,9 @@ const mostrarMiniscript = async (
 
     const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
     const restingBlocksProgen = originalBlockHeight - actualBlockHeight;
-    const restingBlocksHer = originalBlockHeight + BLOCKS_HERENCIA - actualBlockHeight;
-    const restingBlocksRec = originalBlockHeight + BLOCKS_RECOVERY - actualBlockHeight;
+  const { herencia: blocksHer2, recovery: blocksRec2 } = getBlocksFromUI();
+  const restingBlocksHer = originalBlockHeight + blocksHer2 - actualBlockHeight;
+  const restingBlocksRec = originalBlockHeight + blocksRec2 - actualBlockHeight;
 
     // Control sobre el numero de bloques restantes y la clase que se le asigna
     const displayProgen = restingBlocksProgen <= 0 ? 0 : restingBlocksProgen;
@@ -608,7 +627,8 @@ const herenciaPSBT = async (masterNode: BIP32Interface, network: any, explorer: 
     console.log('Descriptor WSH:', wshDescriptor);
 
     const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
-    const restingBlocks = originalBlockHeight + BLOCKS_HERENCIA - actualBlockHeight;
+  const { herencia: blocksHer3 } = getBlocksFromUI();
+  const restingBlocks = originalBlockHeight + blocksHer3 - actualBlockHeight;
     const displayBlocks = restingBlocks <= 0 ? 0 : restingBlocks;
     const blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
 

@@ -103,6 +103,22 @@ const getNetworkName = (explorer: string): string => {
   return 'Desconocida';
 };
 
+// Leer número de bloques desde la interfaz para Autocustodia
+function getBlocksFromUIAutocustodia(): { recovery: number; emergency: number } {
+  try {
+    const r = document.getElementById('blocks-recovery-autocustodia') as HTMLInputElement | null;
+    const e = document.getElementById('blocks-emergency-autocustodia') as HTMLInputElement | null;
+    const rec = r ? parseInt(r.value, 10) : BLOCKS_RECOVERY;
+    const eme = e ? parseInt(e.value, 10) : BLOCKS_EMERGENCY;
+    return {
+      recovery: Number.isNaN(rec) ? BLOCKS_RECOVERY : Math.max(1, rec),
+      emergency: Number.isNaN(eme) ? BLOCKS_EMERGENCY : Math.max(1, eme),
+    };
+  } catch (e) {
+    return { recovery: BLOCKS_RECOVERY, emergency: BLOCKS_EMERGENCY };
+  }
+}
+
 // Función para mostrar mensajes en la interfaz de usuario
 const logToOutput = (outputContainer: HTMLElement, message: string, type: OutputType = 'info'): void => {
   const paragraph = document.createElement('p');
@@ -129,7 +145,7 @@ function enableButtons(): void {
 // Mensaje de bienvenida
 logToOutput(
   outputConsole,
-  '<span aria-hidden="true">🚀</span> Iniciar en red de pruebas:  <span aria-hidden="true">▶️</span> <a href="#" onclick="document.getElementById(\'initTestnet4Btn\').click();return false;">Testnet 4</a>',
+  '<span aria-hidden="true">🚀</span> Iniciar en red de pruebas: <a href="#" onclick="document.getElementById(\'initTestnet3Btn\').click();return false;">Testnet 3</a> o <a href="#" onclick="document.getElementById(\'initTestnet4Btn\').click();return false;">Testnet 4</a>',
   'info'
 );
 
@@ -167,9 +183,11 @@ const initMiniscriptObjet = async (
     logToOutput(outputConsole, '<span aria-hidden="true">🌟</span> ¡El Playground ha sido inicializado con éxito! <span aria-hidden="true">🌟</span>', 'success');
     logToOutput(outputConsole,  `<hr style="border:1px dashed #ccc;">`);
 
-    // Calcular el valor de "after" basado en la altura actual del bloque y el número de bloques de espera
-    const recovery = afterEncode({ blocks: originalBlockHeight + BLOCKS_RECOVERY });
-    const emergency = afterEncode({ blocks: originalBlockHeight + BLOCKS_EMERGENCY });
+  // Leer valores configurables desde la UI (si el usuario ha cambiado los inputs)
+  const { recovery: blocksRecUI, emergency: blocksEmerUI } = getBlocksFromUIAutocustodia();
+  // Calcular el valor de "after" basado en la altura actual del bloque y el número de bloques de espera
+  const recovery = afterEncode({ blocks: originalBlockHeight + blocksRecUI });
+  const emergency = afterEncode({ blocks: originalBlockHeight + blocksEmerUI });
 
     // Crear la política de gasto basada en el valor de "after"
     const policy = POLICY(recovery, emergency);
@@ -298,9 +316,10 @@ const mostrarMiniscript = async (
     const networkName = getNetworkName(explorer);
 
     const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
-    const restingBlocksDiario = originalBlockHeight - actualBlockHeight;
-    const restingBlocksRec = originalBlockHeight + BLOCKS_RECOVERY - actualBlockHeight;
-    const restingBlocksEmer = originalBlockHeight + BLOCKS_EMERGENCY - actualBlockHeight;
+  const restingBlocksDiario = originalBlockHeight - actualBlockHeight;
+  const { recovery: blocksRec2, emergency: blocksEmer2 } = getBlocksFromUIAutocustodia();
+  const restingBlocksRec = originalBlockHeight + blocksRec2 - actualBlockHeight;
+  const restingBlocksEmer = originalBlockHeight + blocksEmer2 - actualBlockHeight;
 
     // Control sobre el número de bloques restantes
     const displayDiario = restingBlocksDiario <= 0 ? 0 : restingBlocksDiario;

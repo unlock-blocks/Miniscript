@@ -16,11 +16,11 @@
       <!-- Contenido superior -->
       <div class="top-panel" aria-label="Cabecera">
         <div class="top-panel-inner">
-          <a href="https://github.com/AngelTFG/BitcoinMiniscript" target="_blank" rel="noopener" aria-label="Repositorio de GitHub de Bitcoin Miniscript" title="Repositorio de GitHub de Bitcoin Miniscript">
+          <a href="https://github.com/unlock-blocks/Miniscript" target="_blank" rel="noopener" aria-label="Repositorio de GitHub de Bitcoin Miniscript" title="Repositorio de GitHub de Bitcoin Miniscript">
             <img src="btcLogo.png" alt="Repositorio de GitHub de Bitcoin Miniscript" title="Repositorio de GitHub de Bitcoin Miniscript" class="top-panel-logo">
           </a>
           <h1 class="top-panel-title">Miniscript Playground</h1>
-          <a href="https://bitcoin-miniscript.vercel.app/" target="_blank" rel="noopener" class="top-panel-right" aria-label="Abrir Miniscript Playground en nueva pestaña" title="Abrir Miniscript Playground en nueva pestaña">🛝</a>
+          <a href="https://unlock-blocks.github.io/Miniscript/" target="_blank" rel="noopener" class="top-panel-right" aria-label="Abrir Miniscript Playground en nueva pestaña" title="Abrir Miniscript Playground en nueva pestaña">🛝</a>
         </div>
       </div>
 
@@ -28,7 +28,7 @@
 
         <!-- Columna izquierda: Menú de pólizas -->
         <div class="menu"  aria-label="Menú de pólizas, seleccione una póliza">
-          <h2><span aria-hidden="true">🗂️</span> Pólizas disponibles</h2>
+          <h2><span aria-hidden="true">🗂️</span> Pólizas </h2>
 
           
           <div class="button-row">
@@ -147,26 +147,25 @@
                 │  └─ <span aria-hidden="true">🗝️</span> Llave del custodio
                 │    
                 │    
-                ├─ <span aria-hidden="true">🛡️</span><b> Recuperación <span aria-hidden="true">🕒</span> 3 meses: <span aria-hidden="true">🔑 ➡️ 🔐🔐</span> </b>
+                ├─ <span aria-hidden="true">🛡️</span><b> Recuperación <span aria-hidden="true">🕒</span> <label for="blocks-recovery-autocustodia" style="display:inline-flex;align-items:center;gap:6px;"> <input type="number" id="blocks-recovery-autocustodia" min="1" value="3" aria-label="Número de bloques para Recuperación" style="width:2.2rem;padding:2px;"/> bloques</label>: <span aria-hidden="true">🔑 ➡️ 🔐🔐</span> </b>
                 │  │ 
                 │  ├─ <span aria-hidden="true">🔑</span> Llave de respaldo principal
                 │  │ 
                 │  └─ <span aria-hidden="true">🔑</span> Llave de respaldo secundaria
                 │    
-                │    
-                └─ <span aria-hidden="true">🚨</span><b> Emergencia <span aria-hidden="true">⏰</span> 5 meses: <span aria-hidden="true">🗝️ ➡️ 🔐</span> </b>
-                   │ 
+                └─ <span aria-hidden="true">🚨</span><b> Emergencia <span aria-hidden="true">⏰</span> <label for="blocks-emergency-autocustodia" style="display:inline-flex;align-items:center;gap:6px;"> <input type="number" id="blocks-emergency-autocustodia" min="1" value="5" aria-label="Número de bloques para Emergencia" style="width:2.2rem;padding:2px;"/> bloques</label>: <span aria-hidden="true">🗝️ ➡️ 🔐</span> </b>
+                   │
                    └─ <span aria-hidden="true">🗝️</span> Llave de apertura por perdida
                 </pre>`);
-            } else if (scriptName === 'boveda') {
+            } else if (scriptName === 'boveda') { 
               document.getElementById('policy-description').innerHTML = dedent(`
                 <div class="visually-hidden">Resumen de la póliza de Bóveda de Seguridad. Apertura forzada en 72 horas con la llave de apertura retardada. Botón del pánico con la llave de apertura inmediata.</div>
                 <pre aria-hidden="true"><span><span style="font-size:1.5em;" aria-hidden="true">🏦</span><span style="font-size:1.2em;"><b> Bóveda de seguridad </b></span></span>
                 │
                 │
-                ├─ <span aria-hidden="true">🔧</span> <b>Apertura forzada <span aria-hidden="true">🕒</span> 72 h: <span aria-hidden="true">🔑 ➡️ 🔐</span> </b>
+                ├─ <span aria-hidden="true">🔧</span> <b>Apertura forzada <span aria-hidden="true">🕒</span> <label for="blocks-retardada" style="display:inline-flex;align-items:center;gap:6px;"> <input type="number" id="blocks-retardada" min="1" value="3" aria-label="Número de bloques para Apertura retardada" style="width:2.2rem;padding:2px;"/> bloques</label>: <span aria-hidden="true">🔑 ➡️ 🔐</span> </b>
                 │  │ 
-                │  └─ <span aria-hidden="true">🔑</span> Llave de apetura retardada
+                │  └─ <span aria-hidden="true">🔑</span> Llave de apertura retardada
                 │
                 │
                 └─ <span aria-hidden="true">🆘</span> <b>Botón del pánico: <span aria-hidden="true">🗝️ ➡️ 🔐</span> </b>
@@ -175,7 +174,7 @@
                 </pre>`);
             } else if (scriptName === 'herencia') {
               document.getElementById('policy-description').innerHTML = dedent(`
-                <div class="visually-hidden">Resumen de la póliza de Herencia Digital. Acceso directo con la llave del progenitor. Herencia a 3 años con las llaves de los herederos. Disputa a 5 años con la llave del abogado.</div>
+                <div class="visually-hidden">Resumen de la póliza de Herencia Digital. Acceso directo con la llave del progenitor. Herencia con un número de bloques configurable y Disputa con otro número configurable.</div>
                 <pre aria-hidden="true"><span><span style="font-size:1.5em;" aria-hidden="true">🧬</span><span style="font-size:1.2em;"><b> Herencia digital </b></span></span>
                 │
                 │
@@ -184,14 +183,14 @@
                 │  └─ <span aria-hidden="true">🔑</span> Llave del progenitor
                 │
                 │
-                ├─ <span aria-hidden="true">🧑🏻👨🏻</span> <b>Herencia <span aria-hidden="true">🕒</span> 3 años: <span aria-hidden="true">🔑🔑 ➡️ 🔐🔐</span> </b>
+                ├─ <span aria-hidden="true">🧑🏻👨🏻</span> <b>Herencia <span aria-hidden="true">🕒</span> <label for="blocks-herencia" style="display:inline-flex;align-items:center;gap:6px;"> <input type="number" id="blocks-herencia" min="1" value="3" aria-label="Número de bloques para Herencia" style="width:2.2rem;padding:2px;"/> bloques</label>: <span aria-hidden="true">🔑🔑 ➡️ 🔐🔐</span> </b>
                 │  │ 
                 │  ├─ <span aria-hidden="true">🔑</span> Llave de la heredera
                 │  │ 
                 │  └─ <span aria-hidden="true">🔑</span> Llave del heredero
                 │
                 │
-                └─ <span aria-hidden="true">👤</span> <b>Disputa <span aria-hidden="true">⏰</span> 5 años: <span aria-hidden="true">🗝️ ➡️ 🔐</span> </b>
+                └─ <span aria-hidden="true">👤</span> <b>Disputa <span aria-hidden="true">⏰</span> <label for="blocks-disputa" style="display:inline-flex;align-items:center;gap:6px;"> <input type="number" id="blocks-disputa" min="1" value="5" aria-label="Número de bloques para Disputa" style="width:2.2rem;padding:2px;"/> bloques</label>: <span aria-hidden="true">🗝️ ➡️ 🔐</span> </b>
                    │ 
                    └─ <span aria-hidden="true">🗝️</span> Llave del abogado
                 </pre>`);

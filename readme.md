@@ -1,4 +1,4 @@
-# Guía de configuración del proyecto Miniscript Playground 
+# Guía de configuración Miniscript Playground 
 
 ## Estructura del Proyecto
 ```txt

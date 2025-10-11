@@ -82,6 +82,17 @@ const getNetworkName = (explorer: string): string => {
   return 'Desconocida';
 };
 
+// Leer número de bloques desde la interfaz para Bóveda (apertura retardada)
+function getBlocksFromUIBoveda(): { retardada: number } {
+  try {
+    const r = document.getElementById('blocks-retardada') as HTMLInputElement | null;
+    const ret = r ? parseInt(r.value, 10) : BLOCKS_RETARDADA;
+    return { retardada: Number.isNaN(ret) ? BLOCKS_RETARDADA : Math.max(1, ret) };
+  } catch (e) {
+    return { retardada: BLOCKS_RETARDADA };
+  }
+}
+
 // Función para mostrar mensajes en la interfaz de usuario
 const logToOutput = (outputContainer: HTMLElement, message: string, type: OutputType = 'info'): void => {
   const paragraph = document.createElement('p');
@@ -108,7 +119,7 @@ function enableButtons(): void {
 // Mensaje de bienvenida
 logToOutput(
   outputConsole,
-  '<span aria-hidden="true">🚀</span> Iniciar en red de pruebas:  <span aria-hidden="true">▶️</span> <a href="#" onclick="document.getElementById(\'initTestnet4Btn\').click();return false;">Testnet 4</a>',
+  '<span aria-hidden="true">🚀</span> Iniciar en red de pruebas: <a href="#" onclick="document.getElementById(\'initTestnet3Btn\').click();return false;">Testnet 3</a> o <a href="#" onclick="document.getElementById(\'initTestnet4Btn\').click();return false;">Testnet 4</a>',
   'info'
 );
 
@@ -146,8 +157,10 @@ const initMiniscriptObjet = async (
     logToOutput(outputConsole, '<span aria-hidden="true">🌟</span> ¡El Playground ha sido inicializado con éxito! <span aria-hidden="true">🌟</span>', 'success');
     logToOutput(outputConsole,  `<hr style="border:1px dashed #ccc;">`);
 
-    // Calcular el valor de "after" basado en la altura actual del bloque y el número de bloques de espera
-    const after = afterEncode({ blocks: originalBlockHeight + BLOCKS_RETARDADA });
+  // Leer valor configurable desde UI (si el usuario ha cambiado el input)
+  const { retardada: blocksRetUI } = getBlocksFromUIBoveda();
+  // Calcular el valor de "after" basado en la altura actual del bloque y el número de bloques de espera
+  const after = afterEncode({ blocks: originalBlockHeight + blocksRetUI });
 
     // Crear la política de gasto basada en el valor de "after"
     const policy = POLICY(after);
@@ -234,9 +247,10 @@ const mostrarMiniscript = async (
     // Obtener el nombre de la red
     const networkName = getNetworkName(explorer);
 
-    const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
-    const restingBlocksInmediata = originalBlockHeight - actualBlockHeight;
-    const restingBlocksRetardada = originalBlockHeight + BLOCKS_RETARDADA - actualBlockHeight;
+  const actualBlockHeight = parseInt(await (await fetch(`${explorer}/api/blocks/tip/height`)).text());
+  const restingBlocksInmediata = originalBlockHeight - actualBlockHeight;
+  const { retardada: blocksRet2 } = getBlocksFromUIBoveda();
+  const restingBlocksRetardada = originalBlockHeight + blocksRet2 - actualBlockHeight;
 
     // Control sobre el número de bloques restantes
     const displayInmediata = restingBlocksInmediata <= 0 ? 0 : restingBlocksInmediata;
