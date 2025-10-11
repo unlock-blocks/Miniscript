@@ -334,7 +334,7 @@ const mostrarMiniscript = async (
     // Mostrar información detallada
     logToOutput(outputConsole, `<span aria-hidden="true">🛜</span> Red actual: <strong>${networkName}</strong>`, 'info');
     logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Altura actual de bloque: <strong>${actualBlockHeight}</strong>`, 'info');
-    logToOutput(outputConsole, `<span aria-hidden="true">🗓️</span> Bloques para poder gastar en la rama de uso diario: <strong class="${diarioClass}">${displayDiario}</strong>`, 'info');
+    logToOutput(outputConsole, `<span aria-hidden="true">🗓️</span> Bloques para poder gastar en la rama de diario: <strong class="${diarioClass}">${displayDiario}</strong>`, 'info');
     logToOutput(outputConsole, `<span aria-hidden="true">🛡️</span> Bloques para poder gastar en la rama de recuperación: <strong class="${recClass}">${displayRec}</strong>`, 'info');
     logToOutput(outputConsole, `<span aria-hidden="true">🚨</span> Bloques para poder gastar en la rama de emergencia: <strong class="${emergClass}">${displayEmerg}</strong>`, 'info');
 
@@ -526,7 +526,7 @@ const dailyPSBT = async (masterNode: BIP32Interface, network: any, explorer: str
       signersPubKeys: [dailyKey1, dailyKey2]
     });
 
-    logToOutput(outputConsole, `<span aria-hidden="true">🗓️</span> Se ha pulsado el botón "Uso diario..."`, 'info');
+    logToOutput(outputConsole, `<span aria-hidden="true">🗓️</span> Se ha pulsado el botón "Diario..."`, 'info');
 
     // Obtener la dirección de recepción 
     const miniscriptAddress = localMiniscriptObjet.getAddress();
@@ -631,7 +631,7 @@ const dailyPSBT = async (masterNode: BIP32Interface, network: any, explorer: str
     // Manejar el error "non-final"
     if (txResponse.match('non-BIP68-final') || txResponse.match('non-final'))  {
       const blocksClass = restingBlocks > 0 ? 'output-error' : 'output-success';
-      logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama de uso diario: <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
+      logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama de diario: <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
       logToOutput(outputConsole, `<span aria-hidden="true">⛏️</span> Los mineros han bloqueado la transacción`, 'error');
       logToOutput(outputConsole,  `<hr style="border:1px dashed #ccc;">`);
     }

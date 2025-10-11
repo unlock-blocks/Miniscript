@@ -307,9 +307,9 @@ const mostrarMiniscript = async (
     // Mostrar información detallada 
     logToOutput(outputConsole,  `<span aria-hidden="true">🛜</span> Red actual: <strong>${networkName}</strong>`, 'info');
     logToOutput(outputConsole,  `<span aria-hidden="true">🧱</span> Altura actual de bloque: <strong>${actualBlockHeight}</strong>`, 'info');
-    logToOutput(outputConsole,  `<span aria-hidden="true">🧓🏻</span> Bloques para poder gastar en la rama de acceso directo: <strong class="${progenClass}">${displayProgen}</strong>`, 'info');
-    logToOutput(outputConsole,  `<span aria-hidden="true">🧑🏻👨🏻</span> Bloques para poder gastar en la rama de herencia: <strong class="${herenClass}">${displayHerencia}</strong>`, 'info');
-    logToOutput(outputConsole,  `<span aria-hidden="true">👤</span> Bloques para poder gastar en la rama de disputa: <strong class="${recoveryClass}">${displayRecovery}</strong>`, 'info');
+    logToOutput(outputConsole,  `<span aria-hidden="true">🧓🏻</span> Bloques para poder gastar en la rama directo: <strong class="${progenClass}">${displayProgen}</strong>`, 'info');
+    logToOutput(outputConsole,  `<span aria-hidden="true">🧑🏻👨🏻</span> Bloques para poder gastar en la rama herencia: <strong class="${herenClass}">${displayHerencia}</strong>`, 'info');
+    logToOutput(outputConsole,  `<span aria-hidden="true">👤</span> Bloques para poder gastar en la rama disputa: <strong class="${recoveryClass}">${displayRecovery}</strong>`, 'info');
 
     const miniscriptAddress = MiniscriptObjet.getAddress();
     logToOutput(outputConsole, `<span aria-hidden="true">📩</span> Dirección del miniscript: <a href="${explorer}/address/${miniscriptAddress}" target="_blank">${miniscriptAddress}</a>`, 'info');
@@ -499,7 +499,7 @@ const directoPSBT = async (masterNode: BIP32Interface, network: any, explorer: s
       signersPubKeys: [progenKey]
     });
 
-    logToOutput(outputConsole, `<span aria-hidden="true">🧓🏻</span> Se ha pulsado el botón "Acceso directo"...`, 'info');
+    logToOutput(outputConsole, `<span aria-hidden="true">🧓🏻</span> Se ha pulsado el botón "Directo"...`, 'info');
     // Obtener la dirección de recepción desde el objeto global
     const miniscriptAddress = localMiniscriptObjet.getAddress();
 
@@ -602,7 +602,7 @@ const directoPSBT = async (masterNode: BIP32Interface, network: any, explorer: s
 
     // Manejar el error "non-final"
     if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
-      logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama de acceso directo:  <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
+      logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama directo:  <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
       logToOutput(outputConsole, `<span aria-hidden="true">⛏️</span> Los mineros han bloqueado la transacción`, 'error');
       logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
     } else {
@@ -747,7 +747,7 @@ const herenciaPSBT = async (masterNode: BIP32Interface, network: any, explorer: 
 
     // Manejar el error "non-final"
     if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
-      logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama de herencia: <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
+      logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama herencia: <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
       logToOutput(outputConsole, `<span aria-hidden="true">⛏️</span> Los mineros han bloqueado la transacción`, 'error');
       logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
     } else {
@@ -890,7 +890,7 @@ const disputaPSBT = async (masterNode: BIP32Interface, network: any, explorer: s
 
     // Manejar el error "non-final"
     if (txResponse.match('non-BIP68-final') || txResponse.match('non-final')) {
-      logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama de disputa: <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
+      logToOutput(outputConsole, `<span aria-hidden="true">🧱</span> Bloques para poder gastar en la rama disputa: <strong class="${blocksClass}">${displayBlocks}</strong>`, 'info');
       logToOutput(outputConsole, `<span aria-hidden="true">⛏️</span> Los mineros han bloqueado la transacción`, 'error');
       logToOutput(outputConsole, `<hr style="border:1px dashed #ccc;">`);
     } else {
